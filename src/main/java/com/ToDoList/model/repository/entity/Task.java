@@ -1,4 +1,4 @@
-package com.ToDoList.model.domain;
+package com.ToDoList.model.repository.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,19 +6,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "subtask")
-public class Subtask {
+@Table(name = "task")
+public class Task {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(name = "subtask_title")
-    private String SubtaskTitle;
-    @ManyToOne
-    @JoinColumn(name = "task_id")
-    private Task task;
+    @Column(name = "task_title")
+    private String taskTitle;
+    @OneToMany
+    private List<Subtask> subtasks;
 }
