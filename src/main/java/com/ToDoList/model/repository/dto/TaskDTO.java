@@ -1,8 +1,10 @@
 package com.ToDoList.model.repository.dto;
 
 import com.ToDoList.model.repository.entity.Subtask;
-import com.ToDoList.model.repository.entity.Task;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
