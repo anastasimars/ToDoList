@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -15,5 +16,7 @@ import java.util.List;
 public class TaskDTO {
     private Long id;
     private String taskTitle;
+    private LocalDate deadline;
     private List<Subtask> subtasks;
+    private boolean status;
 }

@@ -3,6 +3,7 @@ package com.ToDoList.model.repository.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -17,6 +18,10 @@ public class Task {
     private Long id;
     @Column(name = "task_title")
     private String taskTitle;
-    @OneToMany
+    @Column(name = "deadline")
+    private LocalDate deadline;
+    @OneToMany (mappedBy = "task")
     private List<Subtask> subtasks;
+    @Column(name = "status")
+    private boolean status;
 }

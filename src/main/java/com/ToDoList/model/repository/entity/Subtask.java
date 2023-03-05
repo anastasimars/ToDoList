@@ -18,4 +18,7 @@ public class Subtask {
     @ManyToOne
     @JoinColumn(name = "task_id")
     private Task task;
+    @Column(name = "status")
+    private boolean status;
+
 }

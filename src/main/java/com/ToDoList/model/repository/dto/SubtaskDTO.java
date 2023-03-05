@@ -1,8 +1,10 @@
 package com.ToDoList.model.repository.dto;
 
-import com.ToDoList.model.repository.entity.Subtask;
 import com.ToDoList.model.repository.entity.Task;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
@@ -12,10 +14,6 @@ public class SubtaskDTO {
     private Long id;
     private String subtaskTitle;
     private Task task;
-
-    public static SubtaskDTO fromEntity (Subtask subtask){
-        return new SubtaskDTO(subtask.getId(), subtask.getSubtaskTitle(), subtask.getTask());
-    }
-
+    private boolean status;
 
 }
