@@ -1,4 +1,4 @@
-package com.ToDoList.model.service;
+package com.ToDoList.model.service.logic;
 
 import com.ToDoList.model.repository.SubtaskRepository;
 import com.ToDoList.model.repository.TaskRepository;
@@ -15,8 +15,8 @@ class ToDoApiConfig {
                            SubtaskRepository subtaskRepository,
                            TaskMapper taskMapper,
                            SubtaskMapper subtaskMapper) {
-        ReadTaskOperation readTaskOperation =
-                new ReadTaskOperation(taskRepository, subtaskRepository, taskMapper, subtaskMapper);
-        return new ToDoFacade(readTaskOperation);
+        TaskOperations taskOperations =
+                new TaskOperations(taskRepository, subtaskRepository, taskMapper, subtaskMapper);
+        return new ToDoFacade(taskOperations);
     }
 }

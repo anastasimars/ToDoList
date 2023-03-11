@@ -1,9 +1,8 @@
 package com.ToDoList.controller;
 
-import com.ToDoList.model.repository.TaskRepository;
 import com.ToDoList.model.repository.dto.SubtaskDTO;
 import com.ToDoList.model.repository.dto.TaskDTO;
-import com.ToDoList.model.service.ToDoAPI;
+import com.ToDoList.model.service.logic.ToDoAPI;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,43 +22,43 @@ public class TaskController {
 
     @PostMapping(value = "/tasks")
     public void addTask(@RequestBody TaskDTO taskDTO) {
-        throw new RuntimeException("No implementation");
+        toDoAPI.addTask(taskDTO);
     }
 
     @PutMapping("/tasks/{id}")
     public void updateTask(@RequestBody TaskDTO taskDTO,
                            @PathVariable Long id) {
-        throw new RuntimeException("No implementation");
+        toDoAPI.updateTask(taskDTO, id);
     }
 
     @DeleteMapping("/tasks/{id}")
     public void deleteTask(@PathVariable Long id) {
-        throw new RuntimeException("No implementation");
+        toDoAPI.deleteTask(id);
     }
 
     @GetMapping("/tasks/{id}/subtasks")
-    public TaskDTO getAllWithSubtasks() {
-        throw new RuntimeException("No implementation");
+    public List<SubtaskDTO> getAllSubtasksByTaskId(@PathVariable Long id) {
+       return toDoAPI.getAllSubtasksByTaskId(id);
     }
 
     @PostMapping("/tasks/{id}/subtasks")
     public void addSubtask(@PathVariable Long id,
                            @RequestBody SubtaskDTO subtaskDTO) {
-        throw new RuntimeException("No implementation");
+        toDoAPI.addSubtask(id, subtaskDTO);
     }
 
     @GetMapping("/subtasks/{id}")
     public SubtaskDTO getSubtaskById(@PathVariable Long id) {
-        throw new RuntimeException("No implementation");
+        return toDoAPI.getSubtaskById(id);
     }
 
     @PutMapping("/subtasks/{id}")
     public void editSubtaskById(@PathVariable Long id) {
-        throw new RuntimeException("No implementation");
+        toDoAPI.editSubtaskById(id);
     }
 
     @DeleteMapping("/subtasks/{id}")
     public void deleteSubtaskById(@PathVariable Long id){
-        throw new RuntimeException("No implementation");
+        toDoAPI.deleteSubtaskById(id);
     }
 }

@@ -1,4 +1,4 @@
-package com.ToDoList.model.service;
+package com.ToDoList.model.service.logic;
 
 
 import com.ToDoList.model.repository.dto.SubtaskDTO;
@@ -16,11 +16,11 @@ public interface ToDoAPI {
 
     void deleteTask(Long id);
 
-    TaskDTO getAllWithSubtasks();
+    List<SubtaskDTO> getAllSubtasksByTaskId(Long id);
 
-    void addSubtask(Long id, TaskDTO taskDTO);
+    void addSubtask(Long id, SubtaskDTO subtaskDTO);
 
-    SubtaskDTO getSubtaskById(SubtaskDTO subtaskDTO);
+    SubtaskDTO getSubtaskById(Long id);
 
     void editSubtaskById(Long id);
 
