@@ -12,8 +12,7 @@ public class TaskMapper {
               .id(task.getId())
               .taskTitle(task.getTaskTitle())
               .deadline(task.getDeadline())
-              .subtasks(task.getSubtasks())
-              .finished(task.isFinished())
+              .status(task.isStatus())
               .build();
     }
 
@@ -22,8 +21,7 @@ public class TaskMapper {
                 .id(taskDTO.getId())
                 .taskTitle(taskDTO.getTaskTitle())
                 .deadline(taskDTO.getDeadline())
-                .subtasks(taskDTO.getSubtasks())
-                .finished(taskDTO.isFinished())
+                .status(taskDTO.isStatus())
                 .build();
     }
 
