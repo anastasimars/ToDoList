@@ -11,7 +11,7 @@ public class SubtaskMapper {
         return SubtaskDTO.builder()
                 .id(subtask.getId())
                 .subtaskTitle(subtask.getSubtaskTitle())
-                .requiredTime(subtask.getRequiredTime())
+                .status(subtask.isStatus())
                 .task(subtask.getTask())
                 .build();
     }
@@ -20,7 +20,7 @@ public class SubtaskMapper {
         return Subtask.builder()
                 .id(subtaskDTO.getId())
                 .subtaskTitle(subtaskDTO.getSubtaskTitle())
-                .requiredTime(subtaskDTO.getRequiredTime())
+                .status(subtaskDTO.isStatus())
                 .task(subtaskDTO.getTask())
                 .build();
     }

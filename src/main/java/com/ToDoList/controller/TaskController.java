@@ -1,40 +1,65 @@
 package com.ToDoList.controller;
 
+import com.ToDoList.model.repository.TaskRepository;
+import com.ToDoList.model.repository.dto.SubtaskDTO;
 import com.ToDoList.model.repository.dto.TaskDTO;
-import com.ToDoList.model.service.TaskService;
+import com.ToDoList.model.service.ToDoAPI;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/task")
+@RequestMapping("/api")
 @AllArgsConstructor
+@Tag(name = "Task Controller", description = "Interaction with tasks")
 public class TaskController {
-    private TaskService taskService;
-
-    @GetMapping
+    ToDoAPI toDoAPI;
+    @GetMapping(value = "/tasks")
     public List<TaskDTO> getAllTasks() {
-        return taskService.getAllTasks();
+       return toDoAPI.getAllTasks();
     }
 
-    @GetMapping("/{id}")
-    public TaskDTO getTask(@PathVariable(value = "id") Long id) {
-        return taskService.findTaskById(id);
+    @PostMapping(value = "/tasks")
+    public void addTask(@RequestBody TaskDTO taskDTO) {
+        throw new RuntimeException("No implementation");
     }
 
-    @PostMapping
-    public void createTask(@RequestBody TaskDTO taskDTO) {
-        taskService.addTask(taskDTO);
+    @PutMapping("/tasks/{id}")
+    public void updateTask(@RequestBody TaskDTO taskDTO,
+                           @PathVariable Long id) {
+        throw new RuntimeException("No implementation");
     }
 
-    @PutMapping("/{id}")
-    public void editTask(@RequestBody TaskDTO taskDTO, @PathVariable(value = "id") Long id) {
-        taskService.editTask(taskDTO, id);
+    @DeleteMapping("/tasks/{id}")
+    public void deleteTask(@PathVariable Long id) {
+        throw new RuntimeException("No implementation");
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteTask(@PathVariable(value = "id") Long id) {
-        taskService.deleteTask(id);
+    @GetMapping("/tasks/{id}/subtasks")
+    public TaskDTO getAllWithSubtasks() {
+        throw new RuntimeException("No implementation");
+    }
+
+    @PostMapping("/tasks/{id}/subtasks")
+    public void addSubtask(@PathVariable Long id,
+                           @RequestBody SubtaskDTO subtaskDTO) {
+        throw new RuntimeException("No implementation");
+    }
+
+    @GetMapping("/subtasks/{id}")
+    public SubtaskDTO getSubtaskById(@PathVariable Long id) {
+        throw new RuntimeException("No implementation");
+    }
+
+    @PutMapping("/subtasks/{id}")
+    public void editSubtaskById(@PathVariable Long id) {
+        throw new RuntimeException("No implementation");
+    }
+
+    @DeleteMapping("/subtasks/{id}")
+    public void deleteSubtaskById(@PathVariable Long id){
+        throw new RuntimeException("No implementation");
     }
 }
