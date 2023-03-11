@@ -1,4 +1,4 @@
-package com.ToDoList.model.service;
+package com.ToDoList.model.service.logic;
 
 import com.ToDoList.model.repository.dto.SubtaskDTO;
 import com.ToDoList.model.repository.dto.TaskDTO;
@@ -7,10 +7,10 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 @AllArgsConstructor
 class ToDoFacade implements ToDoAPI{
-    private final ReadTaskOperation readTaskOperation;
+    private final TaskOperations taskOperations;
     @Override
     public List<TaskDTO> getAllTasks() {
-        return readTaskOperation.getAll();
+        return taskOperations.getAll();
     }
 
     @Override
@@ -29,17 +29,18 @@ class ToDoFacade implements ToDoAPI{
     }
 
     @Override
-    public TaskDTO getAllWithSubtasks() {
+    public List<SubtaskDTO> getAllSubtasksByTaskId(Long id) {
         return null;
     }
 
     @Override
-    public void addSubtask(Long id, TaskDTO taskDTO) {
+    public void addSubtask(Long id, SubtaskDTO subtaskDTO) {
 
     }
 
+
     @Override
-    public SubtaskDTO getSubtaskById(SubtaskDTO subtaskDTO) {
+    public SubtaskDTO getSubtaskById(Long id) {
         return null;
     }
 
