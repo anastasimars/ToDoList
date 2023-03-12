@@ -47,18 +47,13 @@ public class TaskController {
         toDoAPI.addSubtask(id, subtaskDTO);
     }
 
-    @GetMapping("/subtasks/{id}")
-    public SubtaskDTO getSubtaskById(@PathVariable Long id) {
-        return toDoAPI.getSubtaskById(id);
-    }
-
     @PutMapping("/subtasks/{id}")
     public void editSubtaskById(@PathVariable Long id) {
-        toDoAPI.editSubtaskById(id);
+        toDoAPI.editSubtask(id);
     }
 
     @DeleteMapping("/subtasks/{id}")
     public void deleteSubtaskById(@PathVariable Long id){
-        toDoAPI.deleteSubtaskById(id);
+        toDoAPI.deleteSubtask(id);
     }
 }

@@ -9,13 +9,12 @@ import com.ToDoList.model.service.mapping.TaskMapper;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 class TaskOperations {
     private final TaskRepository taskRepository;
-    private final SubtaskRepository subtaskRepository;
     private final TaskMapper taskMapper;
-    private final SubtaskMapper subtaskMapper;
 
     List<TaskDTO> getAll() {
         return taskRepository.findAll()
@@ -24,9 +23,27 @@ class TaskOperations {
                 .toList();
     }
 
-    void addTask(TaskDTO taskDTO){
+    void addTask(TaskDTO taskDTO) {
         Task task = taskMapper.toEntity(taskDTO);
         taskRepository.save(task);
+    }
+
+    void updateTask(TaskDTO taskDTO, Long id) {
+        taskRepository.findById(id)
+                .map(task -> {
+                    task.setTaskTitle(taskDTO.getTaskTitle());
+                    task.setDeadline(taskDTO.getDeadline());
+                    task.setStatus(taskDTO.isStatus());
+                    return task;
+                })
+                .ifPresent(taskRepository::save);
+    }
+
+    void deleteTask(Long id) {
+        Optional<Task> findTaskByID = taskRepository.findById(id);
+        Task deletedTask = findTaskByID.orElseThrow(() ->
+                new IllegalArgumentException("No task found with the specified ID"));
+        taskRepository.delete(deletedTask);
     }
 
 

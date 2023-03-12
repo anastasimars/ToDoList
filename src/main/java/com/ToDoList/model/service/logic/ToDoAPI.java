@@ -20,9 +20,7 @@ public interface ToDoAPI {
 
     void addSubtask(Long id, SubtaskDTO subtaskDTO);
 
-    SubtaskDTO getSubtaskById(Long id);
+    void editSubtask(Long id);
 
-    void editSubtaskById(Long id);
-
-    void deleteSubtaskById(Long id);
+    void deleteSubtask(Long id);
 }
