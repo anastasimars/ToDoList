@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class SubtaskDTO {
     private Long id;
     private String subtaskTitle;
-    private Task task;
     private boolean status;
 
 }

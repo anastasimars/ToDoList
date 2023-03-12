@@ -15,8 +15,11 @@ class ToDoApiConfig {
                            SubtaskRepository subtaskRepository,
                            TaskMapper taskMapper,
                            SubtaskMapper subtaskMapper) {
-        TaskOperations taskOperations =
-                new TaskOperations(taskRepository, subtaskRepository, taskMapper, subtaskMapper);
-        return new ToDoFacade(taskOperations);
+        final TaskOperations taskOperations =
+                new TaskOperations(taskRepository, taskMapper);
+        final SubtaskOperations subtaskOperations =
+                new SubtaskOperations(subtaskRepository, taskRepository, subtaskMapper);
+        return new ToDoFacade(taskOperations, subtaskOperations);
     }
+
 }
