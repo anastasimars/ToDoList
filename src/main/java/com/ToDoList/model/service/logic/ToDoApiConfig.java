@@ -22,4 +22,13 @@ class ToDoApiConfig {
         return new ToDoFacade(taskOperations, subtaskOperations);
     }
 
+    @Bean
+    public SubtaskMapper subtaskMapper(){
+        return new SubtaskMapper();
+    }
+
+    @Bean
+    public TaskMapper taskMapper(){
+        return new TaskMapper();
+    }
 }

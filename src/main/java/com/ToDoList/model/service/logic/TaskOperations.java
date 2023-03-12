@@ -1,10 +1,8 @@
 package com.ToDoList.model.service.logic;
 
-import com.ToDoList.model.repository.SubtaskRepository;
 import com.ToDoList.model.repository.TaskRepository;
 import com.ToDoList.model.repository.dto.TaskDTO;
 import com.ToDoList.model.repository.entity.Task;
-import com.ToDoList.model.service.mapping.SubtaskMapper;
 import com.ToDoList.model.service.mapping.TaskMapper;
 import lombok.AllArgsConstructor;
 
@@ -41,8 +39,7 @@ class TaskOperations {
 
     void deleteTask(Long id) {
         Optional<Task> findTaskByID = taskRepository.findById(id);
-        Task deletedTask = findTaskByID.orElseThrow(() ->
-                new IllegalArgumentException("No task found with the specified ID"));
+        Task deletedTask = findTaskByID.orElseThrow(NotFoundException::new);
         taskRepository.delete(deletedTask);
     }
 

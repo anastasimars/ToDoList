@@ -42,8 +42,7 @@ class ToDoFacade implements ToDoAPI {
     }
 
     @Override
-    public void editSubtask(Long id) {
-
+    public void editSubtask(Long id, SubtaskDTO subtaskDTO) {
     }
 
     @Override
