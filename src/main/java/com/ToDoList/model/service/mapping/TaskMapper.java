@@ -2,9 +2,7 @@ package com.ToDoList.model.service.mapping;
 
 import com.ToDoList.model.repository.dto.TaskDTO;
 import com.ToDoList.model.repository.entity.Task;
-import org.springframework.stereotype.Component;
 
-@Component
 public class TaskMapper {
 
     public TaskDTO fromEntity (Task task){

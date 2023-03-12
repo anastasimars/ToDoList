@@ -1,6 +1,5 @@
 package com.ToDoList.model.repository.dto;
 
-import com.ToDoList.model.repository.entity.Task;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +13,6 @@ public class SubtaskDTO {
     private Long id;
     private String subtaskTitle;
     private boolean status;
+    private Integer deadline;
 
 }

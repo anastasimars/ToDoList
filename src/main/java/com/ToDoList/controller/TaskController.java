@@ -3,7 +3,6 @@ package com.ToDoList.controller;
 import com.ToDoList.model.repository.dto.SubtaskDTO;
 import com.ToDoList.model.repository.dto.TaskDTO;
 import com.ToDoList.model.service.logic.ToDoAPI;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +11,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
-@Tag(name = "Task Controller", description = "Interaction with tasks")
 public class TaskController {
     ToDoAPI toDoAPI;
     @GetMapping(value = "/tasks")
@@ -48,8 +46,8 @@ public class TaskController {
     }
 
     @PutMapping("/subtasks/{id}")
-    public void editSubtaskById(@PathVariable Long id) {
-        toDoAPI.editSubtask(id);
+    public void editSubtaskById(@PathVariable Long id, @RequestBody SubtaskDTO subtaskDTO) {
+        toDoAPI.editSubtask(id, subtaskDTO);
     }
 
     @DeleteMapping("/subtasks/{id}")

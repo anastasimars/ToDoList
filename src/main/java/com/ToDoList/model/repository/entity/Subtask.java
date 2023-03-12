@@ -3,11 +3,12 @@ package com.ToDoList.model.repository.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name = "subtask")
 public class Subtask {
     @Id
@@ -20,5 +21,6 @@ public class Subtask {
     private Task task;
     @Column(name = "status")
     private boolean status;
-
+    @Column(name = "deadline")
+    private Integer deadline;
 }

@@ -6,11 +6,12 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name = "task")
 public class Task {
     @Id

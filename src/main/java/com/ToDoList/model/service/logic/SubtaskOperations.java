@@ -29,13 +29,16 @@ public class SubtaskOperations {
     }
 
 
-    public void editSubtask(Long id) {
-
+    public void editSubtask(Long id, SubtaskDTO subtaskDTO) {
+        Subtask subtask = subtaskRepository.findById(id).orElseThrow(NotFoundException::new);
+        subtask.setSubtaskTitle(subtaskDTO.getSubtaskTitle());
+        subtask.setDeadline(subtaskDTO.getDeadline());
     }
 
 
     public void deleteSubtask(Long id) {
-
+        Subtask subtask = subtaskRepository.findById(id).orElseThrow(NotFoundException::new);
+        subtaskRepository.delete(subtask);
     }
 
 
