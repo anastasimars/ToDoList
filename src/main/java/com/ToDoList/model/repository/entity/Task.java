@@ -1,6 +1,6 @@
 package com.ToDoList.model.repository.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;

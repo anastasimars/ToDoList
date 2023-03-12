@@ -1,7 +1,8 @@
 package com.ToDoList.model.repository.entity;
 
-import jakarta.persistence.*;
 import lombok.*;
+
+import javax.persistence.*;
 
 @Builder
 @AllArgsConstructor
