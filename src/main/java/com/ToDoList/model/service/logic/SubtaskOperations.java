@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @AllArgsConstructor
-public class SubtaskOperations {
+class SubtaskOperations {
     private final SubtaskRepository subtaskRepository;
 
     private final TaskRepository taskRepository;
@@ -23,7 +23,7 @@ public class SubtaskOperations {
     }
 
     public void addSubtask(Long id, SubtaskDTO subtaskDTO) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
+        Task task = taskRepository.findById(id).orElseThrow(NotFoundException::new);
         Subtask subtask = subtaskMapper.toEntity(subtaskDTO, task);
         subtaskRepository.save(subtask);
     }
