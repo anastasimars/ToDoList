@@ -1,7 +1,7 @@
 # ToDoList App
 
 This is a simple To Do List App that allows users to add, update, and delete tasks and subtasks. 
-The app is built using Java, Spring Boot, Maven, and Swagger for documentation, and Spock for unit tests. 
+The app is built using Java, Spring Boot, Maven, Swagger, Spock. 
 The app uses a PostgreSQL database to store tasks and subtasks.
 
 Features
@@ -11,7 +11,7 @@ Features
 * Mark tasks and subtasks as completed
 * Edit existing tasks and subtasks
 * Delete tasks and subtasks
-* Tasks and subtasks are stored in a MySQL database
+* Tasks and subtasks are stored in a PostgreSQL database
 * API documentation with Swagger
 * Unit tests with Spock
 
