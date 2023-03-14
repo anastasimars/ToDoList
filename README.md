@@ -50,3 +50,12 @@ To edit an existing task or subtask, send a PUT request to the /tasks/{id} or /s
 Deleting a Task or Subtask
 -------------------------
 To delete a task or subtask, send a DELETE request to the /tasks/{id} or /subtasks/{id} endpoint.
+
+API Documentation
+-------------------------
+API documentation is generated using Swagger. You can access the Swagger UI by navigating to http://localhost:8080/swagger-ui.html in your browser. The Swagger UI provides a user-friendly interface for exploring the API endpoints and their parameters.
+
+Testing
+-------------------------
+Unit tests are written using Spock. You can run the tests using the following command: mvn test
+
