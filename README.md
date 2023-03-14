@@ -34,3 +34,19 @@ This documentation provides details on the available endpoints and how to use th
 Adding a Task
 -------------------------
 To add a new task, send a POST request to the /tasks endpoint with a JSON payload that includes the task name.
+
+Adding a Subtask
+-------------------------
+To add a subtask to a task, send a POST request to the /tasks/{taskId}/subtasks endpoint with a JSON payload that includes the subtask name. 
+
+Marking a Task or Subtask as Completed
+-------------------------
+To mark a task or subtask as completed, send a PATCH request to the /tasks/{id} or /subtasks/{id} endpoint with a JSON payload that includes the completed field set to true. 
+
+Editing a Task or Subtask
+-------------------------
+To edit an existing task or subtask, send a PUT request to the /tasks/{id} or /subtasks/{id} endpoint with a JSON payload that includes the updated task or subtask name. 
+
+Deleting a Task or Subtask
+-------------------------
+To delete a task or subtask, send a DELETE request to the /tasks/{id} or /subtasks/{id} endpoint.
