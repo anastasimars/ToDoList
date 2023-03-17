@@ -9,7 +9,7 @@ import spock.lang.Subject
 class SubtaskMapperSpec extends Specification {
 
     @Subject
-    SubtaskMapper subtaskMapper = new SubtaskMapper();
+    private final SubtaskMapper subtaskMapper = new SubtaskMapper();
 
     def "should properly map entity to dto"() {
         given: "test data for Subtask"
@@ -34,7 +34,7 @@ class SubtaskMapperSpec extends Specification {
     }
 
     def "should properly map dto to entity"() {
-        given:"test data for SubtaskDTO"
+        given: "test data for SubtaskDTO"
         final givenSubtaskTitle = "test-title"
         final givenDeadline = 120
         final givenStatus = false
@@ -51,12 +51,12 @@ class SubtaskMapperSpec extends Specification {
                 .build()
 
         when: "perform mapping"
-        final Subtask subtask = subtaskMapper.toEntity(subtaskDTO, task)
+        final Subtask actualSubtask = subtaskMapper.toEntity(subtaskDTO, task)
 
         then: "assertion should be correct"
-        subtask.subtaskTitle == givenSubtaskTitle
-        subtask.deadline == givenDeadline
-        subtask.status == givenStatus
+        actualSubtask.subtaskTitle == givenSubtaskTitle
+        actualSubtask.deadline == givenDeadline
+        actualSubtask.status == givenStatus
 
     }
 }

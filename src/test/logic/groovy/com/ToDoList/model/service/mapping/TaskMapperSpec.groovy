@@ -6,9 +6,10 @@ import com.ToDoList.model.repository.entity.Task
 import spock.lang.Specification
 
 class TaskMapperSpec extends Specification {
-TaskMapper taskMapper = new TaskMapper();
+    private final TaskMapper taskMapper = new TaskMapper();
+
     def "should properly map entity to dto"() {
-        given:"test data for Task"
+        given: "test data for Task"
         final givenTaskTitle = "Test task"
 
         and: "prepared Task"
@@ -17,14 +18,14 @@ TaskMapper taskMapper = new TaskMapper();
                 .build()
 
         when: "perform mapping"
-        final TaskDTO taskDTO = taskMapper.fromEntity(task)
+        final TaskDTO actualTaskDTO = taskMapper.fromEntity(task)
 
         then: "assertion should be correct"
-        taskDTO.taskTitle == givenTaskTitle
+        actualTaskDTO.taskTitle == givenTaskTitle
     }
 
     def "should properly map dto to entity"() {
-        given:"test data for TaskDTO"
+        given: "test data for TaskDTO"
         final givenTaskTitle = "Test task"
 
         and: "prepared TaskDTO"
@@ -33,9 +34,9 @@ TaskMapper taskMapper = new TaskMapper();
                 .build()
 
         when: "perform mapping"
-        final Task task = taskMapper.toEntity(taskDTO)
+        final Task actualTask = taskMapper.toEntity(taskDTO)
 
         then: "assertion should be correct"
-        task.taskTitle == givenTaskTitle
+        actualTask.taskTitle == givenTaskTitle
     }
 }

@@ -2,8 +2,11 @@ package com.ToDoList.controller;
 
 import com.ToDoList.model.repository.dto.SubtaskDTO;
 import com.ToDoList.model.repository.dto.TaskDTO;
+import com.ToDoList.model.repository.entity.Subtask;
+import com.ToDoList.model.repository.entity.Task;
 import com.ToDoList.model.service.logic.ToDoAPI;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +37,12 @@ public class TaskController {
         toDoAPI.deleteTask(id);
     }
 
+    @PatchMapping("/tasks/{id}")
+    public ResponseEntity<Task> markTaskAsCompleted (@PathVariable Long id){
+        Task task = toDoAPI.markTaskAsCompleted(id);
+        return ResponseEntity.ok(task);
+    }
+
     @GetMapping("/tasks/{id}/subtasks")
     public List<SubtaskDTO> getAllSubtasksByTaskId(@PathVariable Long id) {
        return toDoAPI.getAllSubtasksByTaskId(id);
@@ -53,5 +62,11 @@ public class TaskController {
     @DeleteMapping("/subtasks/{id}")
     public void deleteSubtaskById(@PathVariable Long id){
         toDoAPI.deleteSubtask(id);
+    }
+
+    @PatchMapping ("/subtasks/{id}")
+    public ResponseEntity<Subtask> markSubtaskAsCompleted(@PathVariable Long id) {
+        Subtask subtask = toDoAPI.markSubtaskAsCompleted(id);
+        return ResponseEntity.ok(subtask);
     }
 }

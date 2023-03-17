@@ -39,9 +39,13 @@ class TaskOperations {
 
     void deleteTask(Long id) {
         Optional<Task> findTaskByID = taskRepository.findById(id);
-        Task deletedTask = findTaskByID.orElseThrow(NotFoundException::new);
+        Task deletedTask = findTaskByID.orElseThrow(() -> new NotFoundException(id));
         taskRepository.delete(deletedTask);
     }
 
-
+    Task markTaskAsCompleted(Long taskId) {
+        Task task = taskRepository.findById(taskId).orElseThrow(() -> new NotFoundException(taskId));
+        task.setStatus(true);
+        return taskRepository.save(task);
+    }
 }
