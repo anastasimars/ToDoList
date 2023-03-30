@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
-public class TaskController {
+class TaskController {
     ToDoAPI toDoAPI;
     @GetMapping(value = "/tasks")
     public List<TaskDTO> getAllTasks() {

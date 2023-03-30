@@ -6,6 +6,7 @@ import com.ToDoList.model.repository.entity.Task;
 public class TaskMapper {
 
     public TaskDTO fromEntity (Task task){
+
       return TaskDTO.builder()
               .id(task.getId())
               .taskTitle(task.getTaskTitle())

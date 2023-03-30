@@ -15,11 +15,11 @@ class TaskOperationsSpec extends Specification {
 
     def "should correct find all tasks"() {
         given: "tasks for mock"
-        final Task givenSubtask1 = new Task()
-        final Task givenSubtask2 = new Task()
+        final Task givenTask1 = new Task()
+        final Task givenTask2 = new Task()
 
         and: "prepare mock response from repository"
-        taskRepository.findAll() >> List.of(givenSubtask1, givenSubtask2)
+        taskRepository.findAll() >> List.of(givenTask1, givenTask2)
 
         when: "invoke method getAll in TaskOperations"
         final List<TaskDTO> actualListOfTasksDTO = taskOperations.getAll()
