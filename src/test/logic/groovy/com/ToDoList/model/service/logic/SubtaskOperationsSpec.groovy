@@ -10,9 +10,10 @@ import spock.lang.Specification
 import spock.lang.Subject
 
 class SubtaskOperationsSpec extends Specification {
+
     private final SubtaskRepository subtaskRepository = Mock()
     private final TaskRepository taskRepository = Mock()
-    private final SubtaskMapper subtaskMapper = Mock()
+    private final SubtaskMapper subtaskMapper = new SubtaskMapper()
 
     @Subject
     private final SubtaskOperations subtaskOperations = new SubtaskOperations(subtaskRepository, taskRepository, subtaskMapper)
@@ -25,13 +26,54 @@ class SubtaskOperationsSpec extends Specification {
         final Integer givenSize = 2
 
         and: "prepare mock response from repository"
-        subtaskRepository.findAll() >> List.of(givenSubtask1, givenSubtask2)
+        subtaskRepository.findAllByTaskId(givenTask.getId()) >> List.of(givenSubtask1, givenSubtask2)
 
         when: "invoke method getAll in SubtaskOperations"
         List<SubtaskDTO> actualListOfSubtaskDTO = subtaskOperations.getAllSubtasksByTaskId(givenTask.getId())
 
         then: "size should be correct"
         actualListOfSubtaskDTO.size() == givenSize
+    }
 
+    def "check if added subtask to task"() {
+        given: "prepared task and subtask entity"
+        final Long givenId = 1L
+        final Task givenTask = new Task(id: givenId)
+        final SubtaskDTO givenSubtaskDTO = new SubtaskDTO()
+
+        and: "prepare mock response from repository"
+        taskRepository.findById(givenId) >> Optional.of(givenTask)
+        subtaskRepository.save(_ as Subtask) >> null
+
+        when: "invoke method"
+        subtaskOperations.addSubtask(givenId, givenSubtaskDTO)
+
+        then:
+        1 * subtaskRepository.save(_ as Subtask)
+    }
+
+    def "should be thrown not found exception if repository return empty optional"() {
+        given: "prepared task and subtask entity"
+        final Long givenId = 1L
+        final SubtaskDTO givenSubtaskDTO = new SubtaskDTO()
+
+        and: "prepare mock response from repository"
+        taskRepository.findById(givenId) >> Optional.empty()
+
+        when: "invoke method"
+        subtaskOperations.addSubtask(givenId, givenSubtaskDTO)
+
+        then:
+        thrown(NotFoundException)
+    }
+
+
+    def "EditSubtask"() {
+    }
+
+    def "DeleteSubtask"() {
+    }
+
+    def "MarkSubtaskAsCompleted"() {
     }
 }

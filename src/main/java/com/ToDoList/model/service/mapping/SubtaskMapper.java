@@ -15,13 +15,13 @@ public class SubtaskMapper {
                 .build();
     }
 
-    public Subtask toEntity (SubtaskDTO subtaskDTO, Task task){
+    public Subtask toEntity (SubtaskDTO subtaskDTO){
         return Subtask.builder()
                 .id(subtaskDTO.getId())
                 .subtaskTitle(subtaskDTO.getSubtaskTitle())
                 .deadline(subtaskDTO.getDeadline())
                 .status(subtaskDTO.isStatus())
-                .task(task)
+                .task(null)
                 .build();
     }
 

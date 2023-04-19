@@ -25,7 +25,8 @@ class SubtaskOperations {
 
     void addSubtask(Long id, SubtaskDTO subtaskDTO) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
-        Subtask subtask = subtaskMapper.toEntity(subtaskDTO, task);
+        Subtask subtask = subtaskMapper.toEntity(subtaskDTO);
+        subtask.setTask(task);
         subtaskRepository.save(subtask);
     }
 
