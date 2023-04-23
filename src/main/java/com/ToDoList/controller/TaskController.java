@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 class TaskController {
     ToDoAPI toDoAPI;
     @GetMapping(value = "/tasks")
