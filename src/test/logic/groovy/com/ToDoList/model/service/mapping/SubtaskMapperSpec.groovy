@@ -14,13 +14,11 @@ class SubtaskMapperSpec extends Specification {
     def "should properly map entity to dto"() {
         given: "test data for Subtask"
         final givenSubtaskTitle = "test-title"
-        final givenDeadline = 120
         final givenStatus = false
 
         and: "prepared subtask"
         final givenSubtask = Subtask.builder()
                 .subtaskTitle(givenSubtaskTitle)
-                .deadline(givenDeadline)
                 .status(givenStatus)
                 .build()
 
@@ -29,14 +27,12 @@ class SubtaskMapperSpec extends Specification {
 
         then: "assertion should be correct"
         actualSubtaskDTO.subtaskTitle == givenSubtaskTitle
-        actualSubtaskDTO.deadline == givenDeadline
         actualSubtaskDTO.status == givenStatus
     }
 
     def "should properly map dto to entity"() {
         given: "test data for SubtaskDTO"
         final givenSubtaskTitle = "test-title"
-        final givenDeadline = 120
         final givenStatus = false
         final givenTaskTitle = "Test task"
         final Task task = Task.builder()
@@ -46,16 +42,14 @@ class SubtaskMapperSpec extends Specification {
         and: "prepared subtaskDTO"
         final SubtaskDTO subtaskDTO = SubtaskDTO.builder()
                 .subtaskTitle(givenSubtaskTitle)
-                .deadline(givenDeadline)
                 .status(givenStatus)
                 .build()
 
         when: "perform mapping"
-        final Subtask actualSubtask = subtaskMapper.toEntity(subtaskDTO, task)
+        final Subtask actualSubtask = subtaskMapper.toEntity(subtaskDTO)
 
         then: "assertion should be correct"
         actualSubtask.subtaskTitle == givenSubtaskTitle
-        actualSubtask.deadline == givenDeadline
         actualSubtask.status == givenStatus
 
     }

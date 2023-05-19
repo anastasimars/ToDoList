@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 class TaskController {
-    ToDoAPI toDoAPI;
+    private final ToDoAPI toDoAPI;
     @GetMapping(value = "/tasks")
     public List<TaskDTO> getAllTasks() {
        return toDoAPI.getAllTasks();

@@ -3,6 +3,7 @@ package com.ToDoList.model.service.logic;
 import com.ToDoList.model.repository.TaskRepository;
 import com.ToDoList.model.repository.dto.TaskDTO;
 import com.ToDoList.model.repository.entity.Task;
+import com.ToDoList.model.service.logic.faults.NotFoundException;
 import com.ToDoList.model.service.mapping.TaskMapper;
 import lombok.AllArgsConstructor;
 

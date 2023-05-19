@@ -22,6 +22,5 @@ public class Subtask {
     private Task task;
     @Column(name = "status")
     private boolean status;
-    @Column(name = "deadline")
-    private Integer deadline;
+
 }

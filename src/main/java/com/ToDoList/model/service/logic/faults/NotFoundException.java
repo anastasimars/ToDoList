@@ -1,4 +1,4 @@
-package com.ToDoList.model.service.logic;
+package com.ToDoList.model.service.logic.faults;
 
 public class NotFoundException extends RuntimeException{
     public NotFoundException(Long id) {

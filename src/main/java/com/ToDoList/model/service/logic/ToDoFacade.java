@@ -60,6 +60,6 @@ class ToDoFacade implements ToDoAPI {
 
     @Override
     public Subtask markSubtaskAsCompleted(Long subtaskId) {
-        return null;
+       return subtaskOperations.markSubtaskAsCompleted(subtaskId);
     }
 }

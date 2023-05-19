@@ -5,6 +5,7 @@ import com.ToDoList.model.repository.TaskRepository;
 import com.ToDoList.model.repository.dto.SubtaskDTO;
 import com.ToDoList.model.repository.entity.Subtask;
 import com.ToDoList.model.repository.entity.Task;
+import com.ToDoList.model.service.logic.faults.NotFoundException;
 import com.ToDoList.model.service.mapping.SubtaskMapper;
 import lombok.AllArgsConstructor;
 
@@ -32,9 +33,10 @@ class SubtaskOperations {
 
 
     void editSubtask(Long id, SubtaskDTO subtaskDTO) {
-        Subtask subtask = subtaskRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
+        Subtask subtask = subtaskRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(id));
         subtask.setSubtaskTitle(subtaskDTO.getSubtaskTitle());
-        subtask.setDeadline(subtaskDTO.getDeadline());
+        subtaskRepository.save(subtask);
     }
 
 
