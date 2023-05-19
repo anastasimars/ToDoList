@@ -53,7 +53,7 @@ To delete a task or subtask, send a DELETE request to the /tasks/{id} or /subtas
 
 API Documentation
 -------------------------
-API documentation is generated using Swagger. You can access the Swagger UI by navigating to http://localhost:8080/swagger-ui.html in your browser. The Swagger UI provides a user-friendly interface for exploring the API endpoints and their parameters.
+API documentation is generated using Swagger. You can access the Swagger UI by navigating to http://localhost:8080/swagger-ui in your browser. The Swagger UI provides a user-friendly interface for exploring the API endpoints and their parameters.
 
 Testing
 -------------------------
