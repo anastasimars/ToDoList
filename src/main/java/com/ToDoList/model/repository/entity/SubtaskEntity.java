@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "subtask")
-public class Subtask {
+public class SubtaskEntity {
     @Id
     @GeneratedValue
     private Long id;
@@ -19,7 +19,7 @@ public class Subtask {
     private String subtaskTitle;
     @ManyToOne
     @JoinColumn(name = "task_id")
-    private Task task;
+    private TaskEntity task;
     @Column(name = "status")
     private boolean status;
 

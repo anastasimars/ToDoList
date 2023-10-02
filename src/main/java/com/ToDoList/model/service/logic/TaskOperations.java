@@ -2,8 +2,8 @@ package com.ToDoList.model.service.logic;
 
 import com.ToDoList.model.repository.TaskRepository;
 import com.ToDoList.model.repository.dto.TaskDTO;
-import com.ToDoList.model.repository.entity.Task;
-import com.ToDoList.model.service.logic.faults.NotFoundException;
+import com.ToDoList.model.repository.entity.TaskEntity;
+import com.ToDoList.model.service.logic.exceptions.TaskNotFoundException;
 import com.ToDoList.model.service.mapping.TaskMapper;
 import lombok.AllArgsConstructor;
 
@@ -23,10 +23,14 @@ class TaskOperations {
     }
 
     void addTask(TaskDTO taskDTO) {
-        Task task = taskMapper.toEntity(taskDTO);
-        taskRepository.save(task);
+        TaskEntity taskEntity = taskMapper.toEntity(taskDTO);
+        taskRepository.save(taskEntity);
     }
 
+    public TaskEntity getTask(Long id) {
+        return taskRepository.findById(id)
+                .orElseThrow(()-> new TaskNotFoundException(id));
+    }
     void updateTask(TaskDTO taskDTO, Long id) {
         taskRepository.findById(id)
                 .map(task -> {
@@ -39,14 +43,16 @@ class TaskOperations {
     }
 
     void deleteTask(Long id) {
-        Optional<Task> findTaskByID = taskRepository.findById(id);
-        Task deletedTask = findTaskByID.orElseThrow(() -> new NotFoundException(id));
-        taskRepository.delete(deletedTask);
+        Optional<TaskEntity> findTaskByID = taskRepository.findById(id);
+        TaskEntity deletedTaskEntity = findTaskByID.orElseThrow(() -> new TaskNotFoundException(id));
+        taskRepository.delete(deletedTaskEntity);
     }
 
-    Task markTaskAsCompleted(Long taskId) {
-        Task task = taskRepository.findById(taskId).orElseThrow(() -> new NotFoundException(taskId));
-        task.setStatus(true);
-        return taskRepository.save(task);
+    TaskEntity markTaskAsCompleted(Long taskId) {
+        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new TaskNotFoundException(taskId));
+        taskEntity.setStatus(true);
+        return taskRepository.save(taskEntity);
     }
+
+
 }

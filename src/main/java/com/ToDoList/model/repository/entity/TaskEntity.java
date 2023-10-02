@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "task")
-public class Task {
+public class TaskEntity {
     @Id
     @GeneratedValue
     private Long id;
@@ -22,7 +22,7 @@ public class Task {
     @Column(name = "deadline")
     private LocalDate deadline;
     @OneToMany (mappedBy = "task")
-    private List<Subtask> subtasks;
+    private List<SubtaskEntity> subtasks;
     @Column(name = "status")
     private boolean status;
 }

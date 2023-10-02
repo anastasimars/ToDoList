@@ -2,8 +2,8 @@ package com.ToDoList.controller;
 
 import com.ToDoList.model.repository.dto.SubtaskDTO;
 import com.ToDoList.model.repository.dto.TaskDTO;
-import com.ToDoList.model.repository.entity.Subtask;
-import com.ToDoList.model.repository.entity.Task;
+import com.ToDoList.model.repository.entity.SubtaskEntity;
+import com.ToDoList.model.repository.entity.TaskEntity;
 import com.ToDoList.model.service.logic.ToDoAPI;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +20,11 @@ class TaskController {
     @GetMapping(value = "/tasks")
     public List<TaskDTO> getAllTasks() {
        return toDoAPI.getAllTasks();
+    }
+
+    @GetMapping(value = "/tasks/{id}")
+    public TaskEntity getTask(@PathVariable Long id){
+        return toDoAPI.getTask(id);
     }
 
     @PostMapping(value = "/tasks")
@@ -39,9 +44,9 @@ class TaskController {
     }
 
     @PatchMapping("/tasks/{id}")
-    public ResponseEntity<Task> markTaskAsCompleted (@PathVariable Long id){
-        Task task = toDoAPI.markTaskAsCompleted(id);
-        return ResponseEntity.ok(task);
+    public ResponseEntity<TaskEntity> markTaskAsCompleted (@PathVariable Long id){
+        TaskEntity taskEntity = toDoAPI.markTaskAsCompleted(id);
+        return ResponseEntity.ok(taskEntity);
     }
 
     @GetMapping("/tasks/{id}/subtasks")
@@ -66,8 +71,8 @@ class TaskController {
     }
 
     @PatchMapping ("/subtasks/{id}")
-    public ResponseEntity<Subtask> markSubtaskAsCompleted(@PathVariable Long id) {
-        Subtask subtask = toDoAPI.markSubtaskAsCompleted(id);
-        return ResponseEntity.ok(subtask);
+    public ResponseEntity<SubtaskEntity> markSubtaskAsCompleted(@PathVariable Long id) {
+        SubtaskEntity subtaskEntity = toDoAPI.markSubtaskAsCompleted(id);
+        return ResponseEntity.ok(subtaskEntity);
     }
 }

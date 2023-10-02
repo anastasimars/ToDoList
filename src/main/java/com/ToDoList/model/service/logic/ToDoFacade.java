@@ -2,8 +2,8 @@ package com.ToDoList.model.service.logic;
 
 import com.ToDoList.model.repository.dto.SubtaskDTO;
 import com.ToDoList.model.repository.dto.TaskDTO;
-import com.ToDoList.model.repository.entity.Subtask;
-import com.ToDoList.model.repository.entity.Task;
+import com.ToDoList.model.repository.entity.SubtaskEntity;
+import com.ToDoList.model.repository.entity.TaskEntity;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -16,6 +16,11 @@ class ToDoFacade implements ToDoAPI {
     @Override
     public List<TaskDTO> getAllTasks() {
         return taskOperations.getAll();
+    }
+
+    @Override
+    public TaskEntity getTask(Long id) {
+        return taskOperations.getTask(id);
     }
 
     @Override
@@ -34,7 +39,7 @@ class ToDoFacade implements ToDoAPI {
     }
 
     @Override
-    public Task markTaskAsCompleted(Long taskId) {
+    public TaskEntity markTaskAsCompleted(Long taskId) {
         return taskOperations.markTaskAsCompleted(taskId);
     }
 
@@ -59,7 +64,7 @@ class ToDoFacade implements ToDoAPI {
     }
 
     @Override
-    public Subtask markSubtaskAsCompleted(Long subtaskId) {
+    public SubtaskEntity markSubtaskAsCompleted(Long subtaskId) {
        return subtaskOperations.markSubtaskAsCompleted(subtaskId);
     }
 }

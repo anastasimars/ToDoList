@@ -1,8 +1,9 @@
 package com.ToDoList.model.service.mapping
 
 import com.ToDoList.model.repository.dto.SubtaskDTO
-import com.ToDoList.model.repository.entity.Subtask
-import com.ToDoList.model.repository.entity.Task
+import com.ToDoList.model.repository.entity.SubtaskEntity
+import com.ToDoList.model.repository.entity.TaskEntity
+import com.ToDoList.model.repository.entity.TaskEntity
 import spock.lang.Specification
 import spock.lang.Subject
 
@@ -17,7 +18,7 @@ class SubtaskMapperSpec extends Specification {
         final givenStatus = false
 
         and: "prepared subtask"
-        final givenSubtask = Subtask.builder()
+        final givenSubtask = SubtaskEntity.builder()
                 .subtaskTitle(givenSubtaskTitle)
                 .status(givenStatus)
                 .build()
@@ -35,7 +36,7 @@ class SubtaskMapperSpec extends Specification {
         final givenSubtaskTitle = "test-title"
         final givenStatus = false
         final givenTaskTitle = "Test task"
-        final Task task = Task.builder()
+        final TaskEntity task = TaskEntity.builder()
                 .taskTitle(givenTaskTitle)
                 .build()
 
@@ -46,7 +47,7 @@ class SubtaskMapperSpec extends Specification {
                 .build()
 
         when: "perform mapping"
-        final Subtask actualSubtask = subtaskMapper.toEntity(subtaskDTO)
+        final SubtaskEntity actualSubtask = subtaskMapper.toEntity(subtaskDTO)
 
         then: "assertion should be correct"
         actualSubtask.subtaskTitle == givenSubtaskTitle

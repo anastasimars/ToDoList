@@ -1,22 +1,22 @@
 package com.ToDoList.model.service.mapping;
 
 import com.ToDoList.model.repository.dto.TaskDTO;
-import com.ToDoList.model.repository.entity.Task;
+import com.ToDoList.model.repository.entity.TaskEntity;
 
 public class TaskMapper {
 
-    public TaskDTO fromEntity (Task task){
+    public TaskDTO fromEntity (TaskEntity taskEntity){
 
       return TaskDTO.builder()
-              .id(task.getId())
-              .taskTitle(task.getTaskTitle())
-              .deadline(task.getDeadline())
-              .status(task.isStatus())
+              .id(taskEntity.getId())
+              .taskTitle(taskEntity.getTaskTitle())
+              .deadline(taskEntity.getDeadline())
+              .status(taskEntity.isStatus())
               .build();
     }
 
-    public Task toEntity (TaskDTO taskDTO) {
-        return Task.builder()
+    public TaskEntity toEntity (TaskDTO taskDTO) {
+        return TaskEntity.builder()
                 .id(taskDTO.getId())
                 .taskTitle(taskDTO.getTaskTitle())
                 .deadline(taskDTO.getDeadline())

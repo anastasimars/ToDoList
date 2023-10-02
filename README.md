@@ -7,7 +7,7 @@ The app uses a PostgreSQL database to store tasks and subtasks.
 Features
 -------------------------
 * Add new tasks to the list
-* Add subtasks to a task
+* Add subtasks to a taskEntity
 * Mark tasks and subtasks as completed
 * Edit existing tasks and subtasks
 * Delete tasks and subtasks
@@ -33,23 +33,23 @@ This documentation provides details on the available endpoints and how to use th
 
 Adding a Task
 -------------------------
-To add a new task, send a POST request to the /tasks endpoint with a JSON payload that includes the task name.
+To add a new taskEntity, send a POST request to the /tasks endpoint with a JSON payload that includes the taskEntity name.
 
 Adding a Subtask
 -------------------------
-To add a subtask to a task, send a POST request to the /tasks/{taskId}/subtasks endpoint with a JSON payload that includes the subtask name. 
+To add a subtaskEntity to a taskEntity, send a POST request to the /tasks/{taskId}/subtasks endpoint with a JSON payload that includes the subtaskEntity name. 
 
 Marking a Task or Subtask as Completed
 -------------------------
-To mark a task or subtask as completed, send a PATCH request to the /tasks/{id} or /subtasks/{id} endpoint with a JSON payload that includes the completed field set to true. 
+To mark a taskEntity or subtaskEntity as completed, send a PATCH request to the /tasks/{id} or /subtasks/{id} endpoint with a JSON payload that includes the completed field set to true. 
 
 Editing a Task or Subtask
 -------------------------
-To edit an existing task or subtask, send a PUT request to the /tasks/{id} or /subtasks/{id} endpoint with a JSON payload that includes the updated task or subtask name. 
+To edit an existing taskEntity or subtaskEntity, send a PUT request to the /tasks/{id} or /subtasks/{id} endpoint with a JSON payload that includes the updated taskEntity or subtaskEntity name. 
 
 Deleting a Task or Subtask
 -------------------------
-To delete a task or subtask, send a DELETE request to the /tasks/{id} or /subtasks/{id} endpoint.
+To delete a taskEntity or subtaskEntity, send a DELETE request to the /tasks/{id} or /subtasks/{id} endpoint.
 
 API Documentation
 -------------------------

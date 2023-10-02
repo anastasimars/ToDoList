@@ -3,9 +3,9 @@ package com.ToDoList.model.service.logic;
 import com.ToDoList.model.repository.SubtaskRepository;
 import com.ToDoList.model.repository.TaskRepository;
 import com.ToDoList.model.repository.dto.SubtaskDTO;
-import com.ToDoList.model.repository.entity.Subtask;
-import com.ToDoList.model.repository.entity.Task;
-import com.ToDoList.model.service.logic.faults.NotFoundException;
+import com.ToDoList.model.repository.entity.SubtaskEntity;
+import com.ToDoList.model.repository.entity.TaskEntity;
+import com.ToDoList.model.service.logic.exceptions.TaskNotFoundException;
 import com.ToDoList.model.service.mapping.SubtaskMapper;
 import lombok.AllArgsConstructor;
 
@@ -25,29 +25,29 @@ class SubtaskOperations {
     }
 
     void addSubtask(Long id, SubtaskDTO subtaskDTO) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
-        Subtask subtask = subtaskMapper.toEntity(subtaskDTO);
-        subtask.setTask(task);
-        subtaskRepository.save(subtask);
+        TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException(id));
+        SubtaskEntity subtaskEntity = subtaskMapper.toEntity(subtaskDTO);
+        subtaskEntity.setTask(taskEntity);
+        subtaskRepository.save(subtaskEntity);
     }
 
 
     void editSubtask(Long id, SubtaskDTO subtaskDTO) {
-        Subtask subtask = subtaskRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(id));
-        subtask.setSubtaskTitle(subtaskDTO.getSubtaskTitle());
-        subtaskRepository.save(subtask);
+        SubtaskEntity subtaskEntity = subtaskRepository.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException(id));
+        subtaskEntity.setSubtaskTitle(subtaskDTO.getSubtaskTitle());
+        subtaskRepository.save(subtaskEntity);
     }
 
 
     void deleteSubtask(Long id) {
-        Subtask subtask = subtaskRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
-        subtaskRepository.delete(subtask);
+        SubtaskEntity subtaskEntity = subtaskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException(id));
+        subtaskRepository.delete(subtaskEntity);
     }
 
-    Subtask markSubtaskAsCompleted(Long subtaskId) {
-        Subtask subtask = subtaskRepository.findById(subtaskId).orElseThrow(() -> new NotFoundException(subtaskId));
-        subtask.setStatus(true);
-        return subtaskRepository.save(subtask);
+    SubtaskEntity markSubtaskAsCompleted(Long subtaskId) {
+        SubtaskEntity subtaskEntity = subtaskRepository.findById(subtaskId).orElseThrow(() -> new TaskNotFoundException(subtaskId));
+        subtaskEntity.setStatus(true);
+        return subtaskRepository.save(subtaskEntity);
     }
 }
