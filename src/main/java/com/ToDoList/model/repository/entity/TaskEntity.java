@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "task")
 public class TaskEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(name = "task_title")
     private String taskTitle;
