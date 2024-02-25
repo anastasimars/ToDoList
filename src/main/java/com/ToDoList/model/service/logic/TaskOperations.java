@@ -2,10 +2,12 @@ package com.ToDoList.model.service.logic;
 
 import com.ToDoList.model.repository.TaskRepository;
 import com.ToDoList.model.repository.dto.TaskDTO;
+import com.ToDoList.model.repository.entity.SubtaskEntity;
 import com.ToDoList.model.repository.entity.TaskEntity;
 import com.ToDoList.model.service.logic.exceptions.TaskNotFoundException;
 import com.ToDoList.model.service.mapping.TaskMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +23,7 @@ class TaskOperations {
                 .map(taskMapper::fromEntity)
                 .toList();
     }
-
+    @Transactional
     void addTask(TaskDTO taskDTO) {
         TaskEntity taskEntity = taskMapper.toEntity(taskDTO);
         taskRepository.save(taskEntity);
@@ -35,9 +37,9 @@ class TaskOperations {
     void updateTask(TaskDTO taskDTO, Long id) {
         taskRepository.findById(id)
                 .map(task -> {
-                    task.setTaskTitle(taskDTO.getTaskTitle());
-                    task.setDeadline(taskDTO.getDeadline());
-                    task.setStatus(taskDTO.isStatus());
+                    task.updateTaskTitle(taskDTO.getTaskTitle());
+                    task.updateDeadline(taskDTO.getDeadline());
+                    task.updateStatus();
                     return task;
                 })
                 .ifPresent(taskRepository::save);
@@ -50,8 +52,10 @@ class TaskOperations {
     }
 
     TaskDTO markTaskAsCompleted(Long taskId) {
-        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new TaskNotFoundException(taskId));
-        taskEntity.setStatus(true);
+        TaskEntity taskEntity = taskRepository.findById(taskId)
+                .orElseThrow(() -> new TaskNotFoundException(taskId));
+        List<SubtaskEntity> subtasks = taskEntity.getSubtasks();
+        taskEntity.updateStatus();
         taskRepository.save(taskEntity);
         return taskMapper.fromEntity(taskEntity);
     }

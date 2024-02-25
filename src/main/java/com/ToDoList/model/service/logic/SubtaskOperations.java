@@ -24,18 +24,19 @@ class SubtaskOperations {
                 .toList();
     }
 
-    void addSubtask(Long id, SubtaskDTO subtaskDTO) {
-        TaskEntity taskEntity = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException(id));
+    void addSubtask(Long taskId, SubtaskDTO subtaskDTO) {
+        TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() ->
+                new TaskNotFoundException(taskId));
         SubtaskEntity subtaskEntity = subtaskMapper.toEntity(subtaskDTO);
-        subtaskEntity.setTask(taskEntity);
-        subtaskRepository.save(subtaskEntity);
+        taskEntity.addSubtask(subtaskEntity);
+        taskRepository.save(taskEntity); //automatically save subtask too
     }
 
 
     void editSubtask(Long id, SubtaskDTO subtaskDTO) {
         SubtaskEntity subtaskEntity = subtaskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException(id));
-        subtaskEntity.setSubtaskTitle(subtaskDTO.getSubtaskTitle());
+        subtaskEntity.updateSubtaskTitle(subtaskDTO.getSubtaskTitle());
         subtaskRepository.save(subtaskEntity);
     }
 
@@ -47,7 +48,7 @@ class SubtaskOperations {
 
     SubtaskEntity markSubtaskAsCompleted(Long subtaskId) {
         SubtaskEntity subtaskEntity = subtaskRepository.findById(subtaskId).orElseThrow(() -> new TaskNotFoundException(subtaskId));
-        subtaskEntity.setStatus(true);
+        subtaskEntity.updateStatus(true);
         return subtaskRepository.save(subtaskEntity);
     }
 }

@@ -17,11 +17,6 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 class TaskController {
     private final ToDoAPI toDoAPI;
-    @GetMapping
-    public ResponseEntity<String> helloApp(){
-        return ResponseEntity.ok("This is an app for managing your tasks.");
-    }
-
     @GetMapping(value = "/tasks")
     public ResponseEntity<List<TaskDTO>> getAllTasks() {
         List<TaskDTO> allTasks = toDoAPI.getAllTasks();

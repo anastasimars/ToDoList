@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class TaskDTO {
-    private Long id;
     private String taskTitle;
     private LocalDate deadline;
     private boolean status;

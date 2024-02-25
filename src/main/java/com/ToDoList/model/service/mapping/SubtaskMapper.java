@@ -8,7 +8,6 @@ public class SubtaskMapper {
 
     public SubtaskDTO fromEntity (SubtaskEntity subtaskEntity){
         return SubtaskDTO.builder()
-                .id(subtaskEntity.getId())
                 .subtaskTitle(subtaskEntity.getSubtaskTitle())
                 .status(subtaskEntity.isStatus())
                 .build();
@@ -16,7 +15,6 @@ public class SubtaskMapper {
 
     public SubtaskEntity toEntity (SubtaskDTO subtaskDTO){
         return SubtaskEntity.builder()
-                .id(subtaskDTO.getId())
                 .subtaskTitle(subtaskDTO.getSubtaskTitle())
                 .status(subtaskDTO.isStatus())
                 .task(null)

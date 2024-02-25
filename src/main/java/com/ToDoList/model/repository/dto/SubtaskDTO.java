@@ -10,9 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class SubtaskDTO {
-    private Long id;
     private String subtaskTitle;
     private boolean status;
-
-
 }

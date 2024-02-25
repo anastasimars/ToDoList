@@ -9,18 +9,29 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Getter
-@Setter
 @Table(name = "subtask")
 public class SubtaskEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "subtask_title")
+    @Column(name = "subtask_title", nullable = false)
     private String subtaskTitle;
-    @ManyToOne
-    @JoinColumn(name = "task_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_id", nullable = false)
     private TaskEntity task;
-    @Column(name = "status")
-    private boolean status;
+    @Column(name = "status", nullable = false)
+    private boolean status = false;
 
+    public void updateSubtaskTitle(String subtaskTitle) {
+        this.subtaskTitle = subtaskTitle;
+    }
+
+    public void updateStatus(boolean newStatus) {
+        this.status = newStatus;
+    }
+
+    public void joinTask(TaskEntity task) {
+        this.task = task;
+    }
 }
+
