@@ -4,7 +4,6 @@ package com.ToDoList.model.service.logic;
 import com.ToDoList.model.repository.dto.SubtaskDTO;
 import com.ToDoList.model.repository.dto.TaskDTO;
 import com.ToDoList.model.repository.entity.SubtaskEntity;
-import com.ToDoList.model.repository.entity.TaskEntity;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ public interface ToDoAPI {
 
     List<TaskDTO> getAllTasks();
 
-    TaskEntity getTask(Long id);
+    TaskDTO getTask(Long id);
 
     void addTask(TaskDTO taskDTO);
 
@@ -20,7 +19,7 @@ public interface ToDoAPI {
 
     void deleteTask(Long id);
 
-    TaskEntity markTaskAsCompleted(Long taskId);
+    TaskDTO markTaskAsCompleted(Long taskId);
 
     List<SubtaskDTO> getAllSubtasksByTaskId(Long id);
 

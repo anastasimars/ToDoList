@@ -27,9 +27,10 @@ class TaskOperations {
         taskRepository.save(taskEntity);
     }
 
-    public TaskEntity getTask(Long id) {
-        return taskRepository.findById(id)
-                .orElseThrow(()-> new TaskNotFoundException(id));
+    public TaskDTO getTask(Long id) {
+        TaskEntity taskEntity = taskRepository.findById(id)
+                .orElseThrow(() -> new TaskNotFoundException(id));
+        return taskMapper.fromEntity(taskEntity);
     }
     void updateTask(TaskDTO taskDTO, Long id) {
         taskRepository.findById(id)
@@ -48,10 +49,11 @@ class TaskOperations {
         taskRepository.delete(deletedTaskEntity);
     }
 
-    TaskEntity markTaskAsCompleted(Long taskId) {
+    TaskDTO markTaskAsCompleted(Long taskId) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new TaskNotFoundException(taskId));
         taskEntity.setStatus(true);
-        return taskRepository.save(taskEntity);
+        taskRepository.save(taskEntity);
+        return taskMapper.fromEntity(taskEntity);
     }
 
 

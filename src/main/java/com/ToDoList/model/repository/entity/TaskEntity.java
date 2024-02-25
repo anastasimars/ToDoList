@@ -17,12 +17,16 @@ public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
     @Column(name = "task_title")
     private String taskTitle;
+
     @Column(name = "deadline")
     private LocalDate deadline;
+
     @OneToMany (mappedBy = "task")
     private List<SubtaskEntity> subtasks;
+
     @Column(name = "status")
     private boolean status;
 }
