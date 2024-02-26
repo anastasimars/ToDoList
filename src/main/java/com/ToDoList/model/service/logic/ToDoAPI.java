@@ -11,7 +11,7 @@ public interface ToDoAPI {
 
     List<TaskDTO> getAllTasks();
 
-    TaskDTO getTask(Long id);
+    TaskDTO findTaskWithSubtasks(Long taskId);
 
     void addTask(TaskDTO taskDTO);
 

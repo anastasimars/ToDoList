@@ -18,8 +18,8 @@ class ToDoFacade implements ToDoAPI {
     }
 
     @Override
-    public TaskDTO getTask(Long id) {
-        return taskOperations.getTask(id);
+    public TaskDTO findTaskWithSubtasks(Long taskId) {
+        return taskOperations.getTaskWithSubtasks(taskId);
     }
 
     @Override
@@ -64,6 +64,6 @@ class ToDoFacade implements ToDoAPI {
 
     @Override
     public SubtaskEntity markSubtaskAsCompleted(Long subtaskId) {
-       return subtaskOperations.markSubtaskAsCompleted(subtaskId);
+        return subtaskOperations.markSubtaskAsCompleted(subtaskId);
     }
 }

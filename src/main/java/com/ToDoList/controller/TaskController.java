@@ -24,8 +24,8 @@ class TaskController {
     }
 
     @GetMapping(value = "/tasks/{id}")
-    public ResponseEntity<TaskDTO> getTask(@PathVariable Long id){
-        TaskDTO task = toDoAPI.getTask(id);
+    public ResponseEntity<TaskDTO> getTaskWithSubtasks(@PathVariable Long id){
+        TaskDTO task = toDoAPI.findTaskWithSubtasks(id);
         return ResponseEntity.ok(task);
     }
 

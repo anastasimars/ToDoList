@@ -1,11 +1,10 @@
 package com.ToDoList.model.repository.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,4 +14,5 @@ public class TaskDTO {
     private String taskTitle;
     private LocalDate deadline;
     private boolean status;
+    private List<SubtaskDTO> subtasks = new ArrayList<>();
 }

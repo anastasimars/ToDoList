@@ -23,17 +23,20 @@ class TaskOperations {
                 .map(taskMapper::fromEntity)
                 .toList();
     }
+    @Transactional(readOnly = true)
+    TaskDTO getTaskWithSubtasks(Long taskId){
+        TaskEntity taskWithSubtasksById = taskRepository
+                .findTaskWithSubtasksById(taskId)
+                .orElseThrow(()-> new TaskNotFoundException(taskId));
+        return taskMapper.fromEntity(taskWithSubtasksById);
+    }
+
     @Transactional
     void addTask(TaskDTO taskDTO) {
         TaskEntity taskEntity = taskMapper.toEntity(taskDTO);
         taskRepository.save(taskEntity);
     }
-
-    public TaskDTO getTask(Long id) {
-        TaskEntity taskEntity = taskRepository.findById(id)
-                .orElseThrow(() -> new TaskNotFoundException(id));
-        return taskMapper.fromEntity(taskEntity);
-    }
+    @Transactional
     void updateTask(TaskDTO taskDTO, Long id) {
         taskRepository.findById(id)
                 .map(task -> {
