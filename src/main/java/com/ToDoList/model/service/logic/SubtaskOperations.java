@@ -15,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 class SubtaskOperations {
     private final SubtaskRepository subtaskRepository;
-
     private final TaskRepository taskRepository;
     private final SubtaskMapper subtaskMapper;
 
@@ -24,6 +23,7 @@ class SubtaskOperations {
                 .map(subtaskMapper::fromEntity)
                 .toList();
     }
+
     @Transactional
     void addSubtask(Long taskId, SubtaskDTO subtaskDTO) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() ->
@@ -33,7 +33,7 @@ class SubtaskOperations {
         taskRepository.save(taskEntity); //automatically save subtask too
     }
 
-
+    @Transactional
     void editSubtask(Long id, SubtaskDTO subtaskDTO) {
         SubtaskEntity subtaskEntity = subtaskRepository.findById(id)
                 .orElseThrow(() -> new TaskNotFoundException(id));
@@ -41,12 +41,13 @@ class SubtaskOperations {
         subtaskRepository.save(subtaskEntity);
     }
 
-
+    @Transactional
     void deleteSubtask(Long id) {
         SubtaskEntity subtaskEntity = subtaskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException(id));
         subtaskRepository.delete(subtaskEntity);
     }
 
+    @Transactional
     SubtaskEntity markSubtaskAsCompleted(Long subtaskId) {
         SubtaskEntity subtaskEntity = subtaskRepository.findById(subtaskId).orElseThrow(() -> new TaskNotFoundException(subtaskId));
         subtaskEntity.updateStatus(true);
