@@ -1,6 +1,6 @@
 package com.ToDoList.model.repository.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -24,8 +24,8 @@ public class TaskEntity {
     @Column(name = "deadline", nullable = false)
     private LocalDate deadline;
 
-    @OneToMany (mappedBy = "task", cascade = CascadeType.ALL,
-            orphanRemoval = true)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.EAGER)
     private List<SubtaskEntity> subtasks = new ArrayList<>();
 
     @Column(name = "status", nullable = false)

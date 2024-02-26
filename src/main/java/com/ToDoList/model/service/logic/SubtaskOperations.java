@@ -8,6 +8,7 @@ import com.ToDoList.model.repository.entity.TaskEntity;
 import com.ToDoList.model.service.logic.exceptions.TaskNotFoundException;
 import com.ToDoList.model.service.mapping.SubtaskMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ class SubtaskOperations {
                 .map(subtaskMapper::fromEntity)
                 .toList();
     }
-
+    @Transactional
     void addSubtask(Long taskId, SubtaskDTO subtaskDTO) {
         TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() ->
                 new TaskNotFoundException(taskId));
