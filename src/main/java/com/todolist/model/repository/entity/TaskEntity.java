@@ -1,7 +1,6 @@
 package com.todolist.model.repository.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,9 +8,9 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-@Builder
-@AllArgsConstructor
+
 @NoArgsConstructor
 @Entity
 @Getter
@@ -20,6 +19,9 @@ public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "tech_id", unique = true, nullable = false)
+    private UUID techId = UUID.randomUUID();
 
     @Column(name = "task_title", nullable = false)
     private String taskTitle;
@@ -50,5 +52,14 @@ public class TaskEntity {
 
     public void updateDeadline(LocalDate deadline) {
         this.deadline = deadline;
+    }
+
+    @Builder
+    public TaskEntity(UUID techId, String taskTitle, LocalDate deadline, List<SubtaskEntity> subtasks, boolean status) {
+        this.techId = techId;
+        this.taskTitle = taskTitle;
+        this.deadline = deadline;
+        this.subtasks = subtasks;
+        this.status = status;
     }
 }

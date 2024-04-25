@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-test-data-into-subtask
+      author: Siutkina Anastasiia
+      changes:
+        - insert:
+            tableName: subtask
+            columns:
+              - column:
+                  name: tech_id
+                  valueComputed: "'6653ac04-2c01-4ff2-adc3-78acf0f0410d'"
+              - column:
+                  name: subtask_title
+                  value: Fix bugs
+              - column:
+                  name: task_id
+                  value: '1'
+              - column:
+                  name: status
+                  value: 'false'

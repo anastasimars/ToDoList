@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-test-data-into-task
+      author: Siutkina Anastasiia
+      changes:
+        - insert:
+            tableName: task
+            columns:
+              - column:
+                  name: tech_id
+                  valueComputed: "'88e2bf85-e294-4b8e-910c-d0b3a526b829'"
+              - column:
+                  name: task_title
+                  value: "Finish develop ToDoApp"
+              - column:
+                  name: deadline
+                  value: "2024-07-01"
+              - column:
+                  name: status
+                  value: "false"

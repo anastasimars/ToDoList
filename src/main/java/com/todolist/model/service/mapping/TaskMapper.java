@@ -13,6 +13,7 @@ public class TaskMapper {
     public TaskDTO fromEntity(TaskEntity taskEntity) {
 
         return TaskDTO.builder()
+                .techId(taskEntity.getTechId())
                 .taskTitle(taskEntity.getTaskTitle())
                 .deadline(taskEntity.getDeadline())
                 .status(taskEntity.isStatus())
@@ -21,12 +22,14 @@ public class TaskMapper {
     }
 
     public TaskEntity toEntity(TaskDTO taskDTO) {
-        return TaskEntity.builder()
-                .taskTitle(taskDTO.getTaskTitle())
-                .deadline(taskDTO.getDeadline())
-                .status(taskDTO.isStatus())
-                .subtasks(toSubtaskEntityList(taskDTO.getSubtasks()))
-                .build();
+        return
+                TaskEntity.builder()
+                        .techId(taskDTO.getTechId())
+                        .taskTitle(taskDTO.getTaskTitle())
+                        .deadline(taskDTO.getDeadline())
+                        .status(taskDTO.isStatus())
+                        .subtasks(toSubtaskEntityList(taskDTO.getSubtasks()))
+                        .build();
     }
 
     private List<SubtaskEntity> toSubtaskEntityList(List<SubtaskDTO> subtasks) {

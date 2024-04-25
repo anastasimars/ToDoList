@@ -1,0 +1,82 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-task-table
+      author: Siutkina Anastasiia
+      changes:
+        - createTable:
+            tableName: task
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: tech_id
+                  type: uuid
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: task_title
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: deadline
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: boolean
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: add-subtask-table
+      author: Siutkina Anastasiia
+      changes:
+        - createTable:
+            tableName: subtask
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: tech_id
+                  type: uuid
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: subtask_title
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: task_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: add-foreign-key-to-subtask
+      author: Siutkina Anastasiia
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: task_id
+            baseTableName: subtask
+            constraintName: fk_subtask_task
+            referencedColumnNames: id
+            referencedTableName: task
+            onDelete: CASCADE

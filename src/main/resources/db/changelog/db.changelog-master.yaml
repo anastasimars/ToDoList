@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/migrations/2024-04-23-add-task-and-subtask-tables.yaml
+  - include:
+      file: db/changelog/migrations/2024-04-23-create-test-task-entity.yaml
+  - include:
+      file: db/changelog/migrations/2024-04-25-create-test-subtask-entity.yaml
