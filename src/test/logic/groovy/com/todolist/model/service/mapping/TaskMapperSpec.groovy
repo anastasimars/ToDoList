@@ -1,7 +1,7 @@
 package com.todolist.model.service.mapping
 
 
-import com.todolist.model.repository.dto.TaskDTO
+import com.todolist.model.repository.dto.TaskDto
 import com.todolist.model.repository.entity.TaskEntity
 import spock.lang.Specification
 
@@ -18,7 +18,7 @@ class TaskMapperSpec extends Specification {
                 .build()
 
         when: "perform mapping"
-        final TaskDTO actualTaskDTO = taskMapper.fromEntity(task)
+        final TaskDto actualTaskDTO = taskMapper.fromEntity(task)
 
         then: "assertion should be correct"
         actualTaskDTO.taskTitle == givenTaskTitle
@@ -29,7 +29,7 @@ class TaskMapperSpec extends Specification {
         final givenTaskTitle = "Test task"
 
         and: "prepared TaskDTO"
-        final TaskDTO taskDTO = TaskDTO.builder()
+        final TaskDto taskDTO = TaskDto.builder()
                 .taskTitle(givenTaskTitle)
                 .build()
 

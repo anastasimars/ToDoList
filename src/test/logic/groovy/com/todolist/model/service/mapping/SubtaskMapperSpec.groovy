@@ -1,6 +1,6 @@
 package com.todolist.model.service.mapping
 
-import com.todolist.model.repository.dto.SubtaskDTO
+import com.todolist.model.repository.dto.SubtaskDto
 import com.todolist.model.repository.entity.SubtaskEntity
 import com.todolist.model.repository.entity.TaskEntity
 import spock.lang.Specification
@@ -40,7 +40,7 @@ class SubtaskMapperSpec extends Specification {
                 .build()
 
         and: "prepared subtaskDTO"
-        final SubtaskDTO subtaskDTO = SubtaskDTO.builder()
+        final SubtaskDto subtaskDTO = SubtaskDto.builder()
                 .subtaskTitle(givenSubtaskTitle)
                 .status(givenStatus)
                 .build()

@@ -1,10 +1,10 @@
 package com.todolist.model.service.logic
 
-import com.todolist.model.repository.dto.SubtaskDTO
-import com.todolist.model.repository.dto.TaskDTO
+import com.todolist.model.repository.dto.SubtaskDto
+import com.todolist.model.repository.dto.TaskDto
 import com.todolist.model.repository.entity.SubtaskEntity
 import com.todolist.model.repository.entity.TaskEntity
-import com.todolist.model.service.logic.exceptions.TaskNotFoundException
+import com.todolist.model.service.logic.exceptions.NotFoundException
 
 
 
@@ -21,7 +21,7 @@ class TodoAPISpec extends TodoAPISpecConfiguration {
         taskRepository.findAll() >> List.of(givenTask1, givenTask2)
 
         when: "invoke method getAll in TaskOperations"
-        final List<TaskDTO> actualListOfTasksDTO = toDoAPI.getAllTasks()
+        final List<TaskDto> actualListOfTasksDTO = toDoAPI.getAllTasks()
 
         then: "size should be correct"
         actualListOfTasksDTO.size() == 2
@@ -30,7 +30,7 @@ class TodoAPISpec extends TodoAPISpecConfiguration {
     def "check if added task"() {
         given: "prepared SubtaskDTO"
         final Long givenId = 1L
-        final TaskDTO givenTaskDTO = new TaskDTO(id:givenId)
+        final TaskDto givenTaskDTO = new TaskDto(id:givenId)
 
         and: "prepare mock response from repository"
         taskRepository.findById(givenId) >> Optional.of(givenTaskDTO)
@@ -47,12 +47,12 @@ class TodoAPISpec extends TodoAPISpecConfiguration {
         final Long givenId = 1L
         final String oldTitle = "Old test title"
         final String newTitle = "New test title"
-        final TaskDTO givenTaskDTO = TaskDTO.builder().id(givenId).taskTitle(newTitle).build()
+        final TaskDto givenTaskDTO = TaskDto.builder().id(givenId).taskTitle(newTitle).build()
         final TaskEntity givenOldTaskEntity = TaskEntity.builder().id(givenId).taskTitle(oldTitle).build()
         final TaskEntity givenNewTaskEntity = TaskEntity.builder().id(givenId).taskTitle(newTitle).build()
 
         when: "invoke method"
-        toDoAPI.updateTask(givenTaskDTO, givenId)
+        toDoAPI.editTask(givenTaskDTO, givenId)
 
         then: "check if noExceptionThrown"
         noExceptionThrown()
@@ -80,7 +80,7 @@ class TodoAPISpec extends TodoAPISpecConfiguration {
         subtaskRepository.findAllByTaskId(givenTask.getId()) >> List.of(givenSubtask1, givenSubtask2)
 
         when: "invoke method"
-        List<SubtaskDTO> actualListOfSubtaskDTO = toDoAPI.getAllSubtasksByTaskId(givenTask.getId())
+        List<SubtaskDto> actualListOfSubtaskDTO = toDoAPI.getAllSubtasksByTaskId(givenTask.getId())
 
         then: "size should be correct"
         actualListOfSubtaskDTO.size() == givenSize
@@ -91,7 +91,7 @@ class TodoAPISpec extends TodoAPISpecConfiguration {
         final Long givenId = 1L
         final TaskEntity givenTaskEntity = new TaskEntity(id: givenId)
         final SubtaskEntity givenSubtaskEntity = new SubtaskEntity()
-        final SubtaskDTO givenSubtaskDTO = new SubtaskDTO()
+        final SubtaskDto givenSubtaskDTO = new SubtaskDto()
 
         and: "prepare mock response from repository"
         taskRepository.findById(givenId) >> Optional.of(givenTaskEntity)
@@ -112,7 +112,7 @@ class TodoAPISpec extends TodoAPISpecConfiguration {
     def "unhappy path - should be thrown not found exception if repository return empty optional"() {
         given: "prepared task and subtaskDTO"
         final Long givenId = 1L
-        final SubtaskDTO givenSubtaskDTO = new SubtaskDTO()
+        final SubtaskDto givenSubtaskDTO = new SubtaskDto()
 
         and: "prepare mock response from repository"
         taskRepository.findById(givenId) >> Optional.empty()
@@ -122,7 +122,7 @@ class TodoAPISpec extends TodoAPISpecConfiguration {
 
 
         then: "NotFoundException should be thrown"
-        thrown(TaskNotFoundException)
+        thrown(NotFoundException)
     }
 
 
@@ -131,7 +131,7 @@ class TodoAPISpec extends TodoAPISpecConfiguration {
         final Long givenId = 1L
         final String givenOldTitle = "Old test title"
         final String givenNewTitle = "New test title"
-        final SubtaskDTO givenSubtaskDTO = SubtaskDTO.builder().id(givenId).subtaskTitle(givenNewTitle).build()
+        final SubtaskDto givenSubtaskDTO = SubtaskDto.builder().id(givenId).subtaskTitle(givenNewTitle).build()
         final SubtaskEntity givenOldSubtaskEntity = SubtaskEntity.builder().id(givenId).subtaskTitle(givenOldTitle).build()
         final SubtaskEntity givenNewSubtaskEntity = SubtaskEntity.builder().id(givenId).subtaskTitle(givenNewTitle).build()
 

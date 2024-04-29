@@ -11,7 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SubtaskDTO {
+public class SubtaskDto {
     private UUID techId;
     private String subtaskTitle;
     private boolean status;

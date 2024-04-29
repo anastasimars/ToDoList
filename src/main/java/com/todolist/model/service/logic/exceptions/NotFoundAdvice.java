@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class TaskNotFoundAdvice {
+public class NotFoundAdvice {
     @ResponseBody
-    @ExceptionHandler(TaskNotFoundException.class)
+    @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String taskNotFoundHandler(TaskNotFoundException taskNotFoundException) {
-        return taskNotFoundException.getMessage();
+    public String notFoundHandler(NotFoundException notFoundException) {
+        return notFoundException.getMessage();
     }
 }

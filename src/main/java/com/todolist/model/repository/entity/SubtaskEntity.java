@@ -21,7 +21,7 @@ public class SubtaskEntity {
     private Long id;
 
     @Column(name = "tech_id", unique = true, nullable = false)
-    private UUID techId = UUID.randomUUID();
+    private UUID techId;
 
     @Column(name = "subtask_title", nullable = false)
     private String subtaskTitle;
@@ -50,6 +50,17 @@ public class SubtaskEntity {
         this.subtaskTitle = subtaskTitle;
         this.task = task;
         this.status = status;
+    }
+
+    public void updateSubtaskStatus(boolean status) {
+        this.status = status;
+    }
+
+    @PrePersist
+    public void initializeUUID() {
+        if (techId == null) {
+            techId = UUID.randomUUID();
+        }
     }
 }
 

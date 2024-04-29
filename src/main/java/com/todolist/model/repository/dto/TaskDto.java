@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,10 +13,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TaskDTO {
+public class TaskDto {
     private UUID techId;
     private String taskTitle;
     private LocalDate deadline;
     private boolean status;
-    private List<SubtaskDTO> subtasks = new ArrayList<>();
+    private List<SubtaskDto> subtasks;
 }

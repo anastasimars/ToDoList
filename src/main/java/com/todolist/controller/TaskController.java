@@ -1,7 +1,7 @@
 package com.todolist.controller;
 
-import com.todolist.model.repository.dto.SubtaskDTO;
-import com.todolist.model.repository.dto.TaskDTO;
+import com.todolist.model.repository.dto.SubtaskDto;
+import com.todolist.model.repository.dto.TaskDto;
 import com.todolist.model.repository.entity.SubtaskEntity;
 import com.todolist.model.service.logic.ToDoAPI;
 import lombok.AllArgsConstructor;
@@ -10,79 +10,75 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/tasks")
 @AllArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 class TaskController {
     private final ToDoAPI toDoAPI;
 
     @GetMapping
-    public ResponseEntity<List<TaskDTO>> getAllTasks() {
-        List<TaskDTO> allTasks = toDoAPI.getAllTasks();
+    public ResponseEntity<List<TaskDto>> getAllTasks() {
+        List<TaskDto> allTasks = toDoAPI.getAllTasks();
         return ResponseEntity.ok(allTasks);
     }
 
     @GetMapping(value = "/{taskId}")
-    public ResponseEntity<TaskDTO> getTaskWithSubtasks(@PathVariable Long id) {
-        TaskDTO task = toDoAPI.findTaskWithSubtasks(id);
+    public ResponseEntity<TaskDto> getTask(@PathVariable UUID taskId) {
+        TaskDto task = toDoAPI.findTaskWithSubtasks(taskId);
         return ResponseEntity.ok(task);
     }
 
     @PostMapping
-    public ResponseEntity<Void> addTask(@RequestBody TaskDTO taskDTO) {
-        toDoAPI.addTask(taskDTO);
+    public ResponseEntity<Void> addTask(@RequestBody TaskDto taskDto) {
+        toDoAPI.addTask(taskDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{taskId}")
-    public ResponseEntity<Void> updateTask(@RequestBody TaskDTO taskDTO,
-                                           @PathVariable Long id) {
-        toDoAPI.updateTask(taskDTO, id);
+    public ResponseEntity<Void> updateTask(@RequestBody TaskDto taskDto,
+                                           @PathVariable UUID taskId) {
+        toDoAPI.editTask(taskDto, taskId);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{taskId}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
-        toDoAPI.deleteTask(id);
+    public ResponseEntity<Void> deleteTask(@PathVariable UUID taskId) {
+        toDoAPI.deleteTask(taskId);
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{taskId}")
-    public ResponseEntity<TaskDTO> markTaskAsCompleted(@PathVariable Long id) {
-        TaskDTO taskDTO = toDoAPI.markTaskAsCompleted(id);
-        return ResponseEntity.ok(taskDTO);
-    }
-
-    @GetMapping("/{taskId}/subtasks")
-    public ResponseEntity<List<SubtaskDTO>> getAllSubtasksByTaskId(@PathVariable Long id) {
-        List<SubtaskDTO> subtasks = toDoAPI.getAllSubtasksByTaskId(id);
-        return ResponseEntity.ok(subtasks);
+    @PatchMapping("/{taskId}/complete")
+    public ResponseEntity<TaskDto> markTaskAsCompleted(@PathVariable UUID taskId) {
+        TaskDto taskDto = toDoAPI.markTaskAsCompleted(taskId);
+        return ResponseEntity.ok(taskDto);
     }
 
     @PostMapping("/{id}/subtasks")
-    public ResponseEntity<Void> addSubtask(@PathVariable Long id,
-                                           @RequestBody SubtaskDTO subtaskDTO) {
-        toDoAPI.addSubtask(id, subtaskDTO);
+    public ResponseEntity<Void> addSubtask(@PathVariable UUID taskId,
+                                           @RequestBody SubtaskDto subtaskDto) {
+        toDoAPI.addSubtask(taskId, subtaskDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{taskId}/subtasks/{subtaskId}")
-    public ResponseEntity<Void> editSubtaskById(@PathVariable Long id, @RequestBody SubtaskDTO subtaskDTO) {
-        toDoAPI.editSubtask(id, subtaskDTO);
+    public ResponseEntity<Void> editSubtaskById(@PathVariable UUID subtaskId,
+                                                @RequestBody SubtaskDto subtaskDto) {
+        toDoAPI.editSubtask(subtaskId, subtaskDto);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{taskId}/subtasks/{subtaskId}")
-    public ResponseEntity<Void> deleteSubtaskById(@PathVariable Long id) {
-        toDoAPI.deleteSubtask(id);
+    public ResponseEntity<Void> deleteSubtaskById(@PathVariable UUID taskId,
+                                                  @PathVariable UUID subtaskId) {
+        toDoAPI.deleteSubtask(taskId, subtaskId);
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{taskId}/subtasks/{subtaskId}")
-    public ResponseEntity<SubtaskEntity> markSubtaskAsCompleted(@PathVariable Long id) {
-        SubtaskEntity subtaskEntity = toDoAPI.markSubtaskAsCompleted(id);
+    @PatchMapping("/{taskId}/subtasks/{subtaskId}/complete")
+    public ResponseEntity<SubtaskEntity> markSubtaskAsCompleted(@PathVariable UUID subtaskId) {
+        SubtaskEntity subtaskEntity = toDoAPI.markSubtaskAsCompleted(subtaskId);
         return ResponseEntity.ok(subtaskEntity);
     }
 }

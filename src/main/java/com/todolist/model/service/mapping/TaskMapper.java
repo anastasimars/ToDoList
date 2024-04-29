@@ -1,7 +1,7 @@
 package com.todolist.model.service.mapping;
 
-import com.todolist.model.repository.dto.SubtaskDTO;
-import com.todolist.model.repository.dto.TaskDTO;
+import com.todolist.model.repository.dto.SubtaskDto;
+import com.todolist.model.repository.dto.TaskDto;
 import com.todolist.model.repository.entity.SubtaskEntity;
 import com.todolist.model.repository.entity.TaskEntity;
 
@@ -10,9 +10,9 @@ import java.util.List;
 
 public class TaskMapper {
 
-    public TaskDTO fromEntity(TaskEntity taskEntity) {
+    public TaskDto fromEntity(TaskEntity taskEntity) {
 
-        return TaskDTO.builder()
+        return TaskDto.builder()
                 .techId(taskEntity.getTechId())
                 .taskTitle(taskEntity.getTaskTitle())
                 .deadline(taskEntity.getDeadline())
@@ -21,37 +21,39 @@ public class TaskMapper {
                 .build();
     }
 
-    public TaskEntity toEntity(TaskDTO taskDTO) {
+    public TaskEntity toEntity(TaskDto taskDto) {
         return
                 TaskEntity.builder()
-                        .techId(taskDTO.getTechId())
-                        .taskTitle(taskDTO.getTaskTitle())
-                        .deadline(taskDTO.getDeadline())
-                        .status(taskDTO.isStatus())
-                        .subtasks(toSubtaskEntityList(taskDTO.getSubtasks()))
+                        .techId(taskDto.getTechId())
+                        .taskTitle(taskDto.getTaskTitle())
+                        .deadline(taskDto.getDeadline())
+                        .status(taskDto.isStatus())
+                        .subtasks(toSubtaskEntityList(taskDto.getSubtasks()))
                         .build();
     }
 
-    private List<SubtaskEntity> toSubtaskEntityList(List<SubtaskDTO> subtasks) {
+    private List<SubtaskEntity> toSubtaskEntityList(List<SubtaskDto> subtasks) {
         return subtasks.stream().map(this::toEntity)
                 .toList();
     }
 
-    private SubtaskEntity toEntity(SubtaskDTO subtaskDTO) {
+    private SubtaskEntity toEntity(SubtaskDto subtaskDto) {
         return SubtaskEntity.builder()
-                .subtaskTitle(subtaskDTO.getSubtaskTitle())
-                .status(subtaskDTO.isStatus())
+                .techId(subtaskDto.getTechId())
+                .subtaskTitle(subtaskDto.getSubtaskTitle())
+                .status(subtaskDto.isStatus())
                 .build();
     }
 
-    private SubtaskDTO toDto(SubtaskEntity subtaskEntity) {
-        return SubtaskDTO.builder()
+    private SubtaskDto toDto(SubtaskEntity subtaskEntity) {
+        return SubtaskDto.builder()
+                .techId(subtaskEntity.getTechId())
                 .subtaskTitle(subtaskEntity.getSubtaskTitle())
                 .status(subtaskEntity.isStatus())
                 .build();
     }
 
-    public List<SubtaskDTO> toSubtaskDtoList(List<SubtaskEntity> subtaskEntities) {
+    public List<SubtaskDto> toSubtaskDtoList(List<SubtaskEntity> subtaskEntities) {
         return subtaskEntities.stream().map(this::toDto)
                 .toList();
     }

@@ -1,33 +1,32 @@
 package com.todolist.model.service.logic;
 
 
-import com.todolist.model.repository.dto.SubtaskDTO;
-import com.todolist.model.repository.dto.TaskDTO;
+import com.todolist.model.repository.dto.SubtaskDto;
+import com.todolist.model.repository.dto.TaskDto;
 import com.todolist.model.repository.entity.SubtaskEntity;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ToDoAPI {
 
-    List<TaskDTO> getAllTasks();
+    List<TaskDto> getAllTasks();
 
-    TaskDTO findTaskWithSubtasks(Long taskId);
+    TaskDto findTaskWithSubtasks(UUID taskId);
 
-    void addTask(TaskDTO taskDTO);
+    void addTask(TaskDto taskDto);
 
-    void updateTask(TaskDTO taskDTO, Long id);
+    void editTask(TaskDto taskDto, UUID taskId);
 
-    void deleteTask(Long id);
+    void deleteTask(UUID taskId);
 
-    TaskDTO markTaskAsCompleted(Long taskId);
+    TaskDto markTaskAsCompleted(UUID taskId);
 
-    List<SubtaskDTO> getAllSubtasksByTaskId(Long id);
+    void addSubtask(UUID taskId, SubtaskDto subtaskDto);
 
-    void addSubtask(Long id, SubtaskDTO subtaskDTO);
+    void editSubtask(UUID subtaskId, SubtaskDto subtaskDto);
 
-    void editSubtask(Long id, SubtaskDTO subtaskDTO);
+    void deleteSubtask(UUID taskId, UUID subtaskId);
 
-    void deleteSubtask(Long subtaskId);
-
-    SubtaskEntity markSubtaskAsCompleted(Long subtaskId);
+    SubtaskEntity markSubtaskAsCompleted(UUID subtaskId);
 }

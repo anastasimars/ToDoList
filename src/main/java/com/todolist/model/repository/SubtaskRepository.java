@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface SubtaskRepository extends JpaRepository<SubtaskEntity, Long> {
-    @Query("SELECT s FROM SubtaskEntity s WHERE s.task.id = :id")
-    List<SubtaskEntity> findAllByTaskId(@Param("id") Long id);
+
+    @Query("SELECT s FROM SubtaskEntity s WHERE s.techId = techId")
+    Optional<SubtaskEntity> findByTechId(@Param("techId") UUID techId);
 }

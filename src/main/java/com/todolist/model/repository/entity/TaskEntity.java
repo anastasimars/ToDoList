@@ -21,7 +21,7 @@ public class TaskEntity {
     private Long id;
 
     @Column(name = "tech_id", unique = true, nullable = false)
-    private UUID techId = UUID.randomUUID();
+    private UUID techId;
 
     @Column(name = "task_title", nullable = false)
     private String taskTitle;
@@ -30,7 +30,7 @@ public class TaskEntity {
     private LocalDate deadline;
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL,
-            orphanRemoval = true, fetch = FetchType.EAGER)
+            orphanRemoval = true, fetch = FetchType.LAZY)
     private List<SubtaskEntity> subtasks = new ArrayList<>();
 
     @Column(name = "status", nullable = false)
@@ -42,8 +42,8 @@ public class TaskEntity {
     }
 
     public void updateStatus() {
-        this.status = subtasks.stream()
-                .allMatch(SubtaskEntity::isStatus);
+        this.status = this.subtasks != null && !this.subtasks.isEmpty() &&
+                this.subtasks.stream().allMatch(SubtaskEntity::isStatus);
     }
 
     public void updateTaskTitle(String taskTitle) {
@@ -61,5 +61,12 @@ public class TaskEntity {
         this.deadline = deadline;
         this.subtasks = subtasks;
         this.status = status;
+    }
+
+    @PrePersist
+    public void initializeUUID() {
+        if (techId == null) {
+            techId = UUID.randomUUID();
+        }
     }
 }

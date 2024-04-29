@@ -16,13 +16,7 @@ class ToDoApiConfig {
                            TaskMapper taskMapper,
                            SubtaskMapper subtaskMapper) {
 
-        final TaskOperations taskOperations =
-                new TaskOperations(taskRepository, taskMapper);
-
-        final SubtaskOperations subtaskOperations =
-                new SubtaskOperations(subtaskRepository, taskRepository, subtaskMapper);
-
-        return new ToDoFacade(taskOperations, subtaskOperations);
+        return new ToDoService(taskRepository, subtaskRepository, taskMapper, subtaskMapper);
     }
 
     @Bean
