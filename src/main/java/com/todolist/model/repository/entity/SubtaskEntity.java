@@ -37,7 +37,7 @@ public class SubtaskEntity {
         this.subtaskTitle = subtaskTitle;
     }
 
-    public void updateStatus(boolean newStatus) {
+    public void updateSubtaskStatus(boolean newStatus) {
         this.status = newStatus;
     }
 
@@ -49,11 +49,7 @@ public class SubtaskEntity {
         this.techId = techId;
         this.subtaskTitle = subtaskTitle;
         this.task = task;
-        this.status = status;
-    }
-
-    public void updateSubtaskStatus(boolean status) {
-        this.status = status;
+        this.status = false;
     }
 
     @PrePersist

@@ -2,8 +2,7 @@ package com.todolist.model.service.logic;
 
 import com.todolist.model.repository.SubtaskRepository;
 import com.todolist.model.repository.TaskRepository;
-import com.todolist.model.service.mapping.SubtaskMapper;
-import com.todolist.model.service.mapping.TaskMapper;
+import com.todolist.model.service.mapping.ToDoMappers;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,19 +12,13 @@ class ToDoApiConfig {
     @Bean
     public ToDoAPI toDoAPI(TaskRepository taskRepository,
                            SubtaskRepository subtaskRepository,
-                           TaskMapper taskMapper,
-                           SubtaskMapper subtaskMapper) {
+                           ToDoMappers mappers) {
 
-        return new ToDoService(taskRepository, subtaskRepository, taskMapper, subtaskMapper);
+        return new ToDoService(taskRepository, subtaskRepository, mappers);
     }
 
     @Bean
-    public SubtaskMapper subtaskMapper() {
-        return new SubtaskMapper();
-    }
-
-    @Bean
-    public TaskMapper taskMapper() {
-        return new TaskMapper();
+    public ToDoMappers toDoMappers() {
+        return new ToDoMappers();
     }
 }

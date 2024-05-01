@@ -1,7 +1,9 @@
 package com.todolist.controller;
 
-import com.todolist.model.repository.dto.SubtaskDto;
-import com.todolist.model.repository.dto.TaskDto;
+import com.todolist.model.repository.dto.SubtaskDtoRequest;
+import com.todolist.model.repository.dto.SubtaskDtoResponse;
+import com.todolist.model.repository.dto.TaskDtoRequest;
+import com.todolist.model.repository.dto.TaskDtoResponse;
 import com.todolist.model.repository.entity.SubtaskEntity;
 import com.todolist.model.service.logic.ToDoAPI;
 import lombok.AllArgsConstructor;
@@ -19,27 +21,27 @@ class TaskController {
     private final ToDoAPI toDoAPI;
 
     @GetMapping
-    public ResponseEntity<List<TaskDto>> getAllTasks() {
-        List<TaskDto> allTasks = toDoAPI.getAllTasks();
+    public ResponseEntity<List<TaskDtoResponse>> getAllTasks() {
+        List<TaskDtoResponse> allTasks = toDoAPI.getAllTasks();
         return ResponseEntity.ok(allTasks);
     }
 
     @GetMapping(value = "/{taskId}")
-    public ResponseEntity<TaskDto> getTask(@PathVariable UUID taskId) {
-        TaskDto task = toDoAPI.findTaskWithSubtasks(taskId);
+    public ResponseEntity<TaskDtoResponse> getTask(@PathVariable UUID taskId) {
+        TaskDtoResponse task = toDoAPI.findTaskWithSubtasks(taskId);
         return ResponseEntity.ok(task);
     }
 
     @PostMapping
-    public ResponseEntity<Void> addTask(@RequestBody TaskDto taskDto) {
-        toDoAPI.addTask(taskDto);
+    public ResponseEntity<Void> addTask(@RequestBody TaskDtoRequest taskDtoRequest) {
+        toDoAPI.addTask(taskDtoRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{taskId}")
-    public ResponseEntity<Void> updateTask(@RequestBody TaskDto taskDto,
+    public ResponseEntity<Void> updateTask(@RequestBody TaskDtoRequest taskDtoRequest,
                                            @PathVariable UUID taskId) {
-        toDoAPI.editTask(taskDto, taskId);
+        toDoAPI.editTask(taskDtoRequest, taskId);
         return ResponseEntity.ok().build();
     }
 
@@ -50,22 +52,23 @@ class TaskController {
     }
 
     @PatchMapping("/{taskId}/complete")
-    public ResponseEntity<TaskDto> markTaskAsCompleted(@PathVariable UUID taskId) {
-        TaskDto taskDto = toDoAPI.markTaskAsCompleted(taskId);
-        return ResponseEntity.ok(taskDto);
+    public ResponseEntity<TaskDtoResponse> markTaskAsCompleted(@PathVariable UUID taskId) {
+        TaskDtoResponse taskDtoResponse = toDoAPI.markTaskAsCompleted(taskId);
+        return ResponseEntity.ok(taskDtoResponse);
     }
 
     @PostMapping("/{id}/subtasks")
     public ResponseEntity<Void> addSubtask(@PathVariable UUID taskId,
-                                           @RequestBody SubtaskDto subtaskDto) {
-        toDoAPI.addSubtask(taskId, subtaskDto);
+                                           @RequestBody SubtaskDtoRequest subtaskDtoRequest) {
+        toDoAPI.addSubtask(taskId, subtaskDtoRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{taskId}/subtasks/{subtaskId}")
     public ResponseEntity<Void> editSubtaskById(@PathVariable UUID subtaskId,
-                                                @RequestBody SubtaskDto subtaskDto) {
-        toDoAPI.editSubtask(subtaskId, subtaskDto);
+                                                @RequestBody SubtaskDtoRequest subtaskDtoRequest,
+                                                @RequestBody boolean status) {
+        toDoAPI.editSubtask(subtaskId, subtaskDtoRequest, status);
         return ResponseEntity.ok().build();
     }
 
@@ -77,8 +80,9 @@ class TaskController {
     }
 
     @PatchMapping("/{taskId}/subtasks/{subtaskId}/complete")
-    public ResponseEntity<SubtaskEntity> markSubtaskAsCompleted(@PathVariable UUID subtaskId) {
-        SubtaskEntity subtaskEntity = toDoAPI.markSubtaskAsCompleted(subtaskId);
+    public ResponseEntity<SubtaskEntity> markSubtaskAsCompleted(@PathVariable UUID subtaskId,
+                                                                @RequestBody boolean status) {
+        SubtaskEntity subtaskEntity = toDoAPI.markSubtaskAsCompleted(subtaskId, status);
         return ResponseEntity.ok(subtaskEntity);
     }
 }

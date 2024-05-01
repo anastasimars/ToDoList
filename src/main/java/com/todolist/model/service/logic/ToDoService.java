@@ -2,13 +2,14 @@ package com.todolist.model.service.logic;
 
 import com.todolist.model.repository.SubtaskRepository;
 import com.todolist.model.repository.TaskRepository;
-import com.todolist.model.repository.dto.SubtaskDto;
-import com.todolist.model.repository.dto.TaskDto;
+import com.todolist.model.repository.dto.SubtaskDtoRequest;
+import com.todolist.model.repository.dto.SubtaskDtoResponse;
+import com.todolist.model.repository.dto.TaskDtoRequest;
+import com.todolist.model.repository.dto.TaskDtoResponse;
 import com.todolist.model.repository.entity.SubtaskEntity;
 import com.todolist.model.repository.entity.TaskEntity;
 import com.todolist.model.service.logic.exceptions.NotFoundException;
-import com.todolist.model.service.mapping.SubtaskMapper;
-import com.todolist.model.service.mapping.TaskMapper;
+import com.todolist.model.service.mapping.ToDoMappers;
 import lombok.AllArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,71 +20,49 @@ import java.util.UUID;
 class ToDoService implements ToDoAPI {
     private final TaskRepository taskRepository;
     private final SubtaskRepository subtaskRepository;
-    private final TaskMapper taskMapper;
-    private final SubtaskMapper subtaskMapper;
+    private final ToDoMappers mappers;
 
     @Override
     @Transactional(readOnly = true)
-    public List<TaskDto> getAllTasks() {
+    public List<TaskDtoResponse> getAllTasks() {
         return taskRepository.findAllWithSubtasks()
                 .stream()
-                .map(taskMapper::fromEntity)
+                .map(mappers::fromTaskEntityToResponse)
                 .toList();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public TaskDto findTaskWithSubtasks(UUID taskId) {
+    public TaskDtoResponse findTaskWithSubtasks(UUID taskId) {
         TaskEntity taskEntity = findTaskByTechId(taskId);
-        return taskMapper.fromEntity(taskEntity);
+        return mappers.fromTaskEntityToResponse(taskEntity);
     }
 
 
     @Override
     @Transactional
-    public void addTask(TaskDto taskDto) {
-        TaskEntity taskEntity = findTaskByTechId(taskDto.getTechId());
-        taskEntity.getSubtasks().addAll(taskDto.getSubtasks()
-                .stream()
-                .map(subtaskMapper::toEntity)
-                .peek(subtaskEntity -> subtaskEntity.joinTask(taskEntity))
-                .toList());
+    public void addTask(TaskDtoRequest taskDtoRequest) {
+        TaskEntity taskEntity = mappers.fromTaskRequestToEntity(taskDtoRequest);
+        List<SubtaskEntity> subtaskEntities = mappers.
+                toSubtaskEntityList(taskDtoRequest.getSubtasks());
+        subtaskEntities.forEach(taskEntity::addSubtask);
         taskRepository.save(taskEntity);
     }
 
     @Override
     @Transactional
-    public void editTask(TaskDto taskDto, UUID taskId) {
+    public void editTask(TaskDtoRequest taskDtoRequest, UUID taskId) {
         TaskEntity task = findTaskByTechId(taskId);
-        task.updateTaskTitle(taskDto.getTaskTitle());
-        task.updateDeadline(taskDto.getDeadline());
+        task.updateTaskTitle(taskDtoRequest.getTaskTitle());
+        task.updateDeadline(taskDtoRequest.getDeadline());
         task.updateStatus();
-
-        updateSubtasks(task, taskDto.getSubtasks());
+        updateSubtasks(task, taskDtoRequest.getSubtasks());
         taskRepository.save(task);
     }
 
-    private void updateSubtasks(TaskEntity task, List<SubtaskDto> subtasksDtoList) {
-        List<UUID> updatedSubtaskIds = subtasksDtoList.stream()
-                .map(SubtaskDto::getTechId)
-                .toList();
+    private void updateSubtasks(TaskEntity task,
+                                List<SubtaskDtoRequest> subtaskDtos){
 
-        task.getSubtasks().removeIf(subtask ->
-                !updatedSubtaskIds.contains(subtask.getTechId()));
-
-        subtasksDtoList.forEach(dto -> {
-            SubtaskEntity subtask = task.getSubtasks().stream()
-                    .filter(s -> s.getTechId().equals(dto.getTechId()))
-                    .findFirst()
-                    .orElseGet(() -> {
-                        SubtaskEntity newSubtask = subtaskMapper.toEntity(dto);
-                        newSubtask.joinTask(task);
-                        task.getSubtasks().add(newSubtask);
-                        return newSubtask;
-                    });
-            subtask.updateSubtaskTitle(dto.getSubtaskTitle());
-            subtask.updateStatus(dto.isStatus());
-        });
     }
 
     @Override
@@ -95,28 +74,31 @@ class ToDoService implements ToDoAPI {
 
     @Override
     @Transactional
-    public TaskDto markTaskAsCompleted(UUID taskId) {
+    public TaskDtoResponse markTaskAsCompleted(UUID taskId) {
         TaskEntity taskEntity = findTaskByTechId(taskId);
-        taskEntity.updateStatus();
+        taskEntity.updateStatus(); //will 'true' if all subtasks are done
         taskRepository.save(taskEntity);
-        return taskMapper.fromEntity(taskEntity);
+        return mappers.fromTaskEntityToResponse(taskEntity);
     }
 
     @Override
     @Transactional
-    public void addSubtask(UUID taskId, SubtaskDto subtaskDto) {
+    public void addSubtask(UUID taskId, SubtaskDtoRequest subtaskDtoRequest) {
         TaskEntity taskEntity = findTaskByTechId(taskId);
-        SubtaskEntity subtask = subtaskMapper.toEntity(subtaskDto);
+        SubtaskEntity subtask = mappers
+                .fromSubtaskRequestToEntity(subtaskDtoRequest);
         subtask.joinTask(taskEntity);
         subtaskRepository.save(subtask);
     }
 
     @Override
     @Transactional
-    public void editSubtask(UUID subtaskId, SubtaskDto subtaskDto) {
+    public void editSubtask(UUID subtaskId,
+                            SubtaskDtoRequest subtaskDtoRequest,
+                            boolean newStatus) {
         SubtaskEntity subtaskEntity = findSubtaskByTechId(subtaskId);
-        subtaskEntity.updateSubtaskTitle(subtaskDto.getSubtaskTitle());
-        subtaskEntity.updateSubtaskStatus(subtaskDto.isStatus());
+        subtaskEntity.updateSubtaskTitle(subtaskDtoRequest.getSubtaskTitle());
+        subtaskEntity.updateSubtaskStatus(newStatus);
         subtaskRepository.save(subtaskEntity);
     }
 
@@ -132,9 +114,9 @@ class ToDoService implements ToDoAPI {
     }
 
     @Override
-    public SubtaskEntity markSubtaskAsCompleted(UUID subtaskId) {
+    public SubtaskEntity markSubtaskAsCompleted(UUID subtaskId, boolean status) {
         SubtaskEntity subtaskEntity = subtaskRepository.findByTechId(subtaskId).orElseThrow(() -> new NotFoundException(subtaskId));
-        subtaskEntity.updateStatus(true);
+        subtaskEntity.updateSubtaskStatus(status);
         return subtaskRepository.save(subtaskEntity);
     }
 

@@ -1,8 +1,10 @@
 package com.todolist.model.service.logic;
 
 
-import com.todolist.model.repository.dto.SubtaskDto;
-import com.todolist.model.repository.dto.TaskDto;
+import com.todolist.model.repository.dto.SubtaskDtoRequest;
+import com.todolist.model.repository.dto.SubtaskDtoResponse;
+import com.todolist.model.repository.dto.TaskDtoRequest;
+import com.todolist.model.repository.dto.TaskDtoResponse;
 import com.todolist.model.repository.entity.SubtaskEntity;
 
 import java.util.List;
@@ -10,23 +12,23 @@ import java.util.UUID;
 
 public interface ToDoAPI {
 
-    List<TaskDto> getAllTasks();
+    List<TaskDtoResponse> getAllTasks();
 
-    TaskDto findTaskWithSubtasks(UUID taskId);
+    TaskDtoResponse findTaskWithSubtasks(UUID taskId);
 
-    void addTask(TaskDto taskDto);
+    void addTask(TaskDtoRequest taskDtoRequest);
 
-    void editTask(TaskDto taskDto, UUID taskId);
+    void editTask(TaskDtoRequest taskDtoRequest, UUID taskId);
 
     void deleteTask(UUID taskId);
 
-    TaskDto markTaskAsCompleted(UUID taskId);
+    TaskDtoResponse markTaskAsCompleted(UUID taskId);
 
-    void addSubtask(UUID taskId, SubtaskDto subtaskDto);
+    void addSubtask(UUID taskId, SubtaskDtoRequest subtaskDtoRequest);
 
-    void editSubtask(UUID subtaskId, SubtaskDto subtaskDto);
+    void editSubtask(UUID subtaskId, SubtaskDtoRequest subtaskDtoRequest, boolean status);
 
     void deleteSubtask(UUID taskId, UUID subtaskId);
 
-    SubtaskEntity markSubtaskAsCompleted(UUID subtaskId);
+    SubtaskEntity markSubtaskAsCompleted(UUID subtaskId, boolean status);
 }

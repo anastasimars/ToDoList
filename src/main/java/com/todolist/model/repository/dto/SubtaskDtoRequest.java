@@ -5,14 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SubtaskDto {
-    private UUID techId;
+public class SubtaskDtoRequest {
     private String subtaskTitle;
-    private boolean status;
 }

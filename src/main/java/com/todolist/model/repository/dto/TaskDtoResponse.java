@@ -13,10 +13,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TaskDto {
+public class TaskDtoResponse {
     private UUID techId;
     private String taskTitle;
     private LocalDate deadline;
     private boolean status;
-    private List<SubtaskDto> subtasks;
+    private List<SubtaskDtoResponse> subtasks;
 }
